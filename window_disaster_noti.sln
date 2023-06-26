@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "window_disaster_noti", "window_disaster_noti\window_disaster_noti.csproj", "{1C18BBC5-3DB0-4974-B0F3-5B52675B721E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C18BBC5-3DB0-4974-B0F3-5B52675B721E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C18BBC5-3DB0-4974-B0F3-5B52675B721E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C18BBC5-3DB0-4974-B0F3-5B52675B721E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C18BBC5-3DB0-4974-B0F3-5B52675B721E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64066F60-25F5-4974-96C5-1C056708C34D}
+	EndGlobalSection
+EndGlobal
