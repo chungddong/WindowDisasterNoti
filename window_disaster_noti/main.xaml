@@ -10,7 +10,8 @@
         Background="Transparent"
         ResizeMode="NoResize"
         WindowState="Normal"
-        Title="main" Height="351" Width="238">
+        WindowStartupLocation="CenterScreen"
+        Title="main" Height="420" Width="300">
     <Border CornerRadius="10" Background="#f2f2f2"  BorderThickness="2" BorderBrush="#464646" Cursor="Hand">
 
         <Grid Margin="8">
@@ -25,13 +26,21 @@
             <Grid Grid.Row="0">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1.5*"/>
                     <ColumnDefinition Width="7*"/>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1.5*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    
+                    <Border Width="19" Height="19"
+                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border.Background>
+
+                            <ImageBrush/>
+
+                        </Border.Background>
+
+                    </Border>
                 </Grid>
 
                 <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -39,7 +48,15 @@
                 </Grid>
 
                 <Grid Grid.Column="2">
+                    <Border Width="19" Height="19"
+                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border.Background>
 
+                            <ImageBrush/>
+
+                        </Border.Background>
+
+                    </Border>
                 </Grid>
 
             </Grid>
@@ -48,13 +65,53 @@
                 <Label x:Name="label_recent_message" Content="최근 메시지" FontSize="11" FontWeight="Bold" Foreground="#6D6D6D"/>
             </Grid>
 
-            <Grid Grid.Row="2" Margin="0 5 0 0" Background="#6D6D6D">
+            <Grid Grid.Row="2" Margin="0 5 0 0">
+
+                <Border Background="#D3D3D3" CornerRadius="10" Padding="5">
+
+                    <ListBox Background="Transparent" BorderBrush="Transparent">
+                        <ListBox.Resources>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border Background="Transparent"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                Margin="2">
+                                                <TextBlock Text="{TemplateBinding Content}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter Property="Background" Value="LightBlue" />
+                                                    <Setter Property="Foreground" Value="White" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.Resources>
+                        
+                        <ListBoxItem Content="항목 1" />
+                        <ListBoxItem Content="항목 2" />
+                    </ListBox>
+                    
+                </Border>
                 
             </Grid>
 
             <Grid Grid.Row="3">
+                <WrapPanel Orientation="Vertical" Name="wraps" HorizontalAlignment="Center" VerticalAlignment="Center">
 
+                    <Label x:Name="label_bottom" Content="최근 48시간 이내메시지만 출력합니다" FontSize="9" FontWeight="Bold" Foreground="#6D6D6D"/>
 
+                    <Label x:Name="label_bottom_gps" Content="전국 전체" FontSize="8" FontWeight="Bold" Foreground="#6D6D6D" HorizontalAlignment="Center"/>
+                    
+                </WrapPanel>
+                
             </Grid>
 
         </Grid>

@@ -8,11 +8,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icon.png" />
+    <None Remove="setting.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.48" />
     <PackageReference Include="PuppeteerSharp" Version="10.1.0" />
     <PackageReference Include="Selenium.Chrome.WebDriver" Version="85.0.0" />
     <PackageReference Include="Selenium.WebDriver" Version="4.10.0" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="114.0.5735.9000" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Style\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="setting.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
