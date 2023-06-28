@@ -95,7 +95,7 @@
                             </Style>
                         </ListBox.Resources>
                         
-                        <ListBoxItem Content="항목 1" />
+                        <ListBoxItem Content="항목 43" />
                         <ListBoxItem Content="항목 2" />
                     </ListBox>
                     
