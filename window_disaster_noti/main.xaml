@@ -14,7 +14,7 @@
         Title="main" Height="420" Width="300">
     <Border CornerRadius="10" Background="#f2f2f2"  BorderThickness="2" BorderBrush="#464646" Cursor="Hand">
 
-        <Grid Margin="8">
+        <Grid Margin="8"> 
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
@@ -69,34 +69,32 @@
 
                 <Border Background="#D3D3D3" CornerRadius="10" Padding="5">
 
-                    <ListBox Background="Transparent" BorderBrush="Transparent">
+                    <ListBox x:Name="lstbox" Background="Transparent" BorderBrush="Transparent">
                         <ListBox.Resources>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListBoxItem">
-                                            <Border Background="Transparent"
-                                BorderBrush="Black"
-                                BorderThickness="1"
-                                Margin="2">
-                                                <TextBlock Text="{TemplateBinding Content}"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
+                                            <Border Background="#f2f2f2" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="2">
+
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Title}" 
+                                               HorizontalAlignment="left" Margin="10 10 0 0"
+                                               VerticalAlignment="Center" />
+                                                    <TextBlock Text="{Binding maintext}" 
+                                               HorizontalAlignment="Left" Margin="10 3 0 10"
+                                               VerticalAlignment="Center" />
+                                                </StackPanel>
+
                                             </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsSelected" Value="True">
-                                                    <Setter Property="Background" Value="LightBlue" />
-                                                    <Setter Property="Foreground" Value="White" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
+
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
                             </Style>
                         </ListBox.Resources>
                         
-                        <ListBoxItem Content="항목 43" />
-                        <ListBoxItem Content="항목 2" />
+
                     </ListBox>
                     
                 </Border>
