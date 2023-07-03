@@ -23,5 +23,11 @@ namespace window_disaster_noti
         {
             InitializeComponent();
         }
+
+        private void border_mousedown(object sender, MouseButtonEventArgs e)
+        {
+            //MessageBox.Show("누름");
+            Close();
+        }
     }
 }

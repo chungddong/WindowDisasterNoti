@@ -10,7 +10,7 @@
         Background="Transparent"
         ResizeMode="NoResize"
         WindowState="Normal"
-        WindowStartupLocation="Manual"
+        WindowStartupLocation="CenterScreen"
         Title="main" Height="720" Width="480">
     <Border CornerRadius="20" Background="#f2f2f2"  BorderThickness="2" BorderBrush="#464646" Cursor="Arrow">
 

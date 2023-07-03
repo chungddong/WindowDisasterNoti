@@ -95,7 +95,9 @@ namespace window_disaster_noti
 
         private void btn_set_clicked(object sender, MouseButtonEventArgs e)
         {
+            window_disaster_noti.dialog_set ds = new window_disaster_noti.dialog_set();
 
+            ds.Show();
         }
     }
 

@@ -10,16 +10,16 @@
         Background="Transparent"
         ResizeMode="NoResize"
         WindowState="Normal"
-        WindowStartupLocation="Manual"
+        WindowStartupLocation="CenterScreen"
         Title="main" Height="720" Width="480">
-    <Border CornerRadius="20" Background="#19000000"  BorderThickness="2" BorderBrush="#464646" Cursor="Arrow">
+    <Border CornerRadius="20" Background="#66000000"  BorderThickness="2" BorderBrush="#464646" Cursor="Arrow" MouseDown="border_mousedown" >
 
         <Grid Margin="15">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1.2*"/>
                 <RowDefinition Height="4*"/>
-                <RowDefinition Height="6*"/>
+                <RowDefinition Height="4*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
 
@@ -38,11 +38,7 @@
                 <Grid Grid.Column="2">
                     <Border x:Name="btn_set" Width="35" Height="35"
                                 HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand">
-                        <Border.Background >
-
-                            <ImageBrush ImageSource="Setting.png" Opacity="0.6"/>
-
-                        </Border.Background>
+                        
 
                     </Border>
                 </Grid>
@@ -50,8 +46,27 @@
             </Grid>
 
             <Grid Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <Border Background="#D3D3D3" CornerRadius="18" Padding="5" Width="200" Height="100">
-                    
+                <Border Background="#f2f2f2" CornerRadius="18" Padding="5" Width="200" Height="100">
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Button Background="Transparent" BorderThickness="0" FontWeight="Bold" > 프로그램 설정</Button>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Background="#464646">
+                            
+                        </Grid>
+
+                        <Grid Grid.Row="2">
+                            <Button Background="Transparent" BorderThickness="0"  FontWeight="Bold"> 종료</Button>
+                        </Grid>
+
+                    </Grid>
                 </Border>
             </Grid>
 
