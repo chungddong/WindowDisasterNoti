@@ -10,11 +10,11 @@
         Background="Transparent"
         ResizeMode="NoResize"
         WindowState="Normal"
-        WindowStartupLocation="CenterScreen"
-        Title="main" Height="420" Width="300">
-    <Border CornerRadius="10" Background="#f2f2f2"  BorderThickness="2" BorderBrush="#464646" Cursor="Hand">
+        WindowStartupLocation="Manual"
+        Title="main" Height="720" Width="480">
+    <Border CornerRadius="20" Background="#f2f2f2"  BorderThickness="2" BorderBrush="#464646" Cursor="Hand">
 
-        <Grid Margin="8"> 
+        <Grid Margin="15"> 
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
@@ -32,11 +32,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <Border Width="19" Height="19"
+                    <Border Width="35" Height="35"
                                 HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Border.Background>
 
-                            <ImageBrush/>
+                            <ImageBrush ImageSource="Icon.png"/>
 
                         </Border.Background>
 
@@ -44,15 +44,15 @@
                 </Grid>
 
                 <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label x:Name="label_title" Content="재난 문자 알림 서비스" FontSize="13" FontWeight="Bold"/>
+                    <Label x:Name="label_title" Content="재난 문자 알림 서비스" FontSize="27" FontWeight="Bold"/>
                 </Grid>
 
                 <Grid Grid.Column="2">
-                    <Border Width="19" Height="19"
+                    <Border Width="35" Height="35"
                                 HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Border.Background>
 
-                            <ImageBrush/>
+                            <ImageBrush ImageSource="Setting.png"/>
 
                         </Border.Background>
 
@@ -62,28 +62,31 @@
             </Grid>
 
             <Grid Grid.Row="1">
-                <Label x:Name="label_recent_message" Content="최근 메시지" FontSize="11" FontWeight="Bold" Foreground="#6D6D6D"/>
+                <Label x:Name="label_recent_message" Content="최근 메시지" FontSize="19" FontWeight="Bold" Foreground="#6D6D6D"/>
             </Grid>
 
             <Grid Grid.Row="2" Margin="0 5 0 0">
 
-                <Border Background="#D3D3D3" CornerRadius="10" Padding="5">
+                <Border Background="#D3D3D3" CornerRadius="18" Padding="5">
 
-                    <ListBox x:Name="lstbox" Background="Transparent" BorderBrush="Transparent">
+                    <ListBox x:Name="lstbox" Background="Transparent" BorderBrush="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                         <ListBox.Resources>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListBoxItem">
-                                            <Border Background="#f2f2f2" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="2">
+                                            <Border Background="#f2f2f2" BorderBrush="Black" BorderThickness="1" CornerRadius="18 18 18 0" Margin="6">
 
-                                                <StackPanel>
+                                                <StackPanel Margin="16">
                                                     <TextBlock Text="{Binding Title}" 
-                                               HorizontalAlignment="left" Margin="10 10 0 0"
-                                               VerticalAlignment="Center" />
+                                               HorizontalAlignment="left" Margin="0 0 0 0"
+                                               VerticalAlignment="Center" FontWeight="Bold" Foreground="#FFEF4534" FontSize="19" />
                                                     <TextBlock Text="{Binding maintext}" 
-                                               HorizontalAlignment="Left" Margin="10 3 0 10"
-                                               VerticalAlignment="Center" />
+                                               HorizontalAlignment="Left" Margin="0 3 0 3"
+                                               VerticalAlignment="Center" TextWrapping="Wrap" Width="380" FontSize="17"/>
+                                                    <TextBlock Text="{Binding timeline}"
+                                               HorizontalAlignment="Left" Margin="0 0 0 0"
+                                               VerticalAlignment="Center" TextWrapping="Wrap" Width="240" Foreground="#FF797979" FontSize="15"/>
                                                 </StackPanel>
 
                                             </Border>
@@ -93,7 +96,6 @@
                                 </Setter>
                             </Style>
                         </ListBox.Resources>
-                        
 
                     </ListBox>
                     
@@ -104,9 +106,9 @@
             <Grid Grid.Row="3">
                 <WrapPanel Orientation="Vertical" Name="wraps" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                    <Label x:Name="label_bottom" Content="최근 48시간 이내메시지만 출력합니다" FontSize="9" FontWeight="Bold" Foreground="#6D6D6D"/>
+                    <Label x:Name="label_bottom" Content="최근 48시간 이내메시지만 출력합니다" FontSize="17" FontWeight="Bold" Foreground="#6D6D6D"/>
 
-                    <Label x:Name="label_bottom_gps" Content="전국 전체" FontSize="8" FontWeight="Bold" Foreground="#6D6D6D" HorizontalAlignment="Center"/>
+                    <Label x:Name="label_bottom_gps" Content="전국 전체" FontSize="15" FontWeight="Bold" Foreground="#6D6D6D" HorizontalAlignment="Center"/>
                     
                 </WrapPanel>
                 
