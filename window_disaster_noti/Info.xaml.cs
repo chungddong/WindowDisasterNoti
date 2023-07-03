@@ -20,20 +20,18 @@ namespace window_disaster_noti
     /// <summary>
     /// main.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class main : Window
+    public partial class Info : Window
     {
-        DispatcherTimer timer = new DispatcherTimer(); //타이머 선언
+        DispatcherTimer timer = new DispatcherTimer();
         private List<noti> list; //이전 메시지들 모음을 위한 리스트 
 
         private string lastnum; //가장 최근의 재난문자 ID
 
         public string url = "https://www.safekorea.go.kr/idsiSFK/sfk/cs/sua/web/DisasterSmsList.do"; //재난문자 데이터 소스링크
 
-        public main()
+        public Info()
         {
             InitializeComponent();
-
-            
 
 
             timer.Interval = TimeSpan.FromMilliseconds(3000);    //시간간격 설정
@@ -41,6 +39,8 @@ namespace window_disaster_noti
             timer.Tick += new EventHandler(timer_Tick);          //이벤트 추가
 
             //timer.Start(); //타이머 시작 - 메인 이벤트 막으려면 주석처리
+
+            
 
         }
 
@@ -93,9 +93,9 @@ namespace window_disaster_noti
 
         }
 
-        private void btn_set_clicked(object sender, MouseButtonEventArgs e)  //세팅버튼 눌렸을 경우
+        private void btn_set_clicked(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("눌림");
+
         }
     }
 
@@ -103,8 +103,8 @@ namespace window_disaster_noti
     {
         public string Title { get; set; } //제목
 
-        public string maintext { get; set; } //내용
+        public string maintext { get; set; }
 
-        public string timeline { get; set; } //시간
+        public string timeline { get; set; }
     }
 }
