@@ -12,7 +12,7 @@
         WindowState="Normal"
         WindowStartupLocation="Manual"
         Title="main" Height="720" Width="480">
-    <Border CornerRadius="20" Background="#f2f2f2"  BorderThickness="2" BorderBrush="#464646" Cursor="Hand">
+    <Border CornerRadius="20" Background="#f2f2f2"  BorderThickness="2" BorderBrush="#464646" Cursor="Arrow">
 
         <Grid Margin="15"> 
 
@@ -48,8 +48,8 @@
                 </Grid>
 
                 <Grid Grid.Column="2">
-                    <Border Width="35" Height="35"
-                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border x:Name="btn_set" Width="35" Height="35"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="btn_set_clicked">
                         <Border.Background>
 
                             <ImageBrush ImageSource="Setting.png"/>
@@ -61,7 +61,7 @@
 
             </Grid>
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Cursor="Arrow">
                 <Label x:Name="label_recent_message" Content="최근 메시지" FontSize="19" FontWeight="Bold" Foreground="#6D6D6D"/>
             </Grid>
 

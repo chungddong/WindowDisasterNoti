@@ -92,6 +92,11 @@ namespace window_disaster_noti
         {
 
         }
+
+        private void btn_set_clicked(object sender, MouseButtonEventArgs e)  //세팅버튼 눌렸을 경우
+        {
+            MessageBox.Show("눌림");
+        }
     }
 
     public class noti  //메시지 출력용 구조 선언
