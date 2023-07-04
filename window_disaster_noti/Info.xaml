@@ -80,7 +80,7 @@
                                                 <StackPanel Margin="16">
                                                     <TextBlock Text="{Binding Title}" 
                                                HorizontalAlignment="left" Margin="0 0 0 0"
-                                               VerticalAlignment="Center" FontWeight="Bold" Foreground="#FFEF4534" FontSize="19" />
+                                               VerticalAlignment="Center" FontWeight="Bold" Foreground="#FFEF4534" FontSize="19" TextWrapping="Wrap" Width="380" />
                                                     <TextBlock Text="{Binding maintext}" 
                                                HorizontalAlignment="Left" Margin="0 3 0 3"
                                                VerticalAlignment="Center" TextWrapping="Wrap" Width="380" FontSize="17"/>

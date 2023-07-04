@@ -29,6 +29,14 @@ namespace window_disaster_noti
 
         public string url = "https://www.safekorea.go.kr/idsiSFK/sfk/cs/sua/web/DisasterSmsList.do"; //재난문자 데이터 소스링크
 
+        DateTime today = DateTime.Today;
+        DateTime startday; //시작 날짜
+        public string date_start; //검색 시작 날짜 오늘 날짜의 이틀전
+        public string date_end;  //검색 끝 날짜 오늘 날짜
+
+        string payloadDataBakup = "{\"searchInfo\":{\"pageIndex\":\"1\",\"pageUnit\":\"10\",\"pageSize\":\"10\",\"firstIndex\":\"1\",\"lastIndex\":\"1\",\"recordCountPerPage\":\"10\",\"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\",\"searchGb\":\"1\",\"searchWrd\":\"\",\"rcv_Area_Id\":\"\",\"dstr_se_Id\":\"\",\"c_ocrc_type\":\"\",\"sbLawArea1\":\"\",\"sbLawArea2\":\"\",\"sbLawArea3\":\"\"}}";
+        string payloadData;
+
         public Info()
         {
             InitializeComponent();
@@ -38,16 +46,23 @@ namespace window_disaster_noti
 
             timer.Tick += new EventHandler(timer_Tick);          //이벤트 추가
 
-            //timer.Start(); //타이머 시작 - 메인 이벤트 막으려면 주석처리
 
-            
+            startday = today.AddDays(-2); //이틀전으로 시작 날짜 설정
+            date_start = startday.ToString("yyyy-MM-dd");
+            date_end = today.ToString("yyyy-MM-dd");
+
+            payloadData = "{\"searchInfo\":{\"pageIndex\":\"1\",\"pageUnit\":\"10\",\"pageSize\":\"10\",\"firstIndex\":\"1\",\"lastIndex\":\"1\",\"recordCountPerPage\":\"10\",\"searchBgnDe\":" + "\"" + date_start + "\"," + "\"searchEndDe\":" + "\"" + date_end + "\",\"searchGb\":\"1\",\"searchWrd\":\"\",\"rcv_Area_Id\":\"\",\"dstr_se_Id\":\"\",\"c_ocrc_type\":\"\",\"sbLawArea1\":\"\",\"sbLawArea2\":\"\",\"sbLawArea3\":\"\"}}";
+
+            MessageBox.Show("오늘 날짜 : " + date_end + ", " + "그저께 날짜 : " + date_start);
+
+            timer.Start(); //타이머 시작 - 메인 이벤트 막으려면 주석처리
+
+            //"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\" //날짜 payloaddata 형식
 
         }
 
         private async void timer_Tick(object sender, EventArgs e)
         {
-            string payloadData = "{\"searchInfo\":{\"pageIndex\":\"1\",\"pageUnit\":\"10\",\"pageSize\":\"10\",\"firstIndex\":\"1\",\"lastIndex\":\"1\",\"recordCountPerPage\":\"10\",\"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\",\"searchGb\":\"1\",\"searchWrd\":\"\",\"rcv_Area_Id\":\"\",\"dstr_se_Id\":\"\",\"c_ocrc_type\":\"\",\"sbLawArea1\":\"\",\"sbLawArea2\":\"\",\"sbLawArea3\":\"\"}}";
-
             string boardContent = await GetBoardContent(url, payloadData);
 
 
