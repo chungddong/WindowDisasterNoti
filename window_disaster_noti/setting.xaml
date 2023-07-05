@@ -48,7 +48,7 @@
 
                 <Grid Grid.Column="2">
                     <Border x:Name="btn_set" Width="35" Height="35"
-                                HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="btn_set_clicked">
+                                HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand">
                         
 
                     </Border>
