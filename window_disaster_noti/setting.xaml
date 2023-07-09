@@ -83,11 +83,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <Border Width="35" Height="35"
+                    <Border Width="40" Height="40" Cursor="Hand"
                                 HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Border.Background>
 
-                            <ImageBrush />
+                            <ImageBrush ImageSource="ic_back.png" />
 
                         </Border.Background>
 
@@ -114,7 +114,7 @@
 
                     <StackPanel>
 
-                        <Label x:Name="test" Content="프로그램 설정" FontSize="17" FontWeight="Bold"/>
+                        <Label x:Name="test" Content="프로그램 설정" FontSize="17" FontWeight="Bold" />
 
                         <Border Width="auto" Height="auto" Background="#E3E3E3" BorderBrush="#BCBCBC" BorderThickness="2" CornerRadius="10">
                             <StackPanel>

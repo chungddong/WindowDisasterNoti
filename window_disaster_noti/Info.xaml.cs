@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Winforms = System.Windows.Forms;
+
 
 namespace window_disaster_noti
 {
@@ -22,6 +24,8 @@ namespace window_disaster_noti
     /// </summary>
     public partial class Info : Window
     {
+        Winforms.NotifyIcon noti;
+
         DispatcherTimer timer = new DispatcherTimer();
         private List<noti> list; //이전 메시지들 모음을 위한 리스트 
 
@@ -37,10 +41,13 @@ namespace window_disaster_noti
         string payloadDataBakup = "{\"searchInfo\":{\"pageIndex\":\"1\",\"pageUnit\":\"10\",\"pageSize\":\"10\",\"firstIndex\":\"1\",\"lastIndex\":\"1\",\"recordCountPerPage\":\"10\",\"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\",\"searchGb\":\"1\",\"searchWrd\":\"\",\"rcv_Area_Id\":\"\",\"dstr_se_Id\":\"\",\"c_ocrc_type\":\"\",\"sbLawArea1\":\"\",\"sbLawArea2\":\"\",\"sbLawArea3\":\"\"}}";
         string payloadData;
 
+        
+
         public Info()
         {
             InitializeComponent();
 
+            setNotiTray();
 
             timer.Interval = TimeSpan.FromMilliseconds(3000);    //시간간격 설정
 
@@ -59,6 +66,22 @@ namespace window_disaster_noti
 
             //"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\" //날짜 payloaddata 형식
 
+        }
+
+        private void setNotiTray()
+        {
+            noti = new Winforms.NotifyIcon();
+            //noti.Icon = new System.Drawing.Icon("icon.png");
+            noti.Visible = true;
+            noti.Text = "NotiTest";
+
+            noti.DoubleClick += delegate (object sender, EventArgs eventArgs)
+            {
+                // 화면을 최소화 상태에서 다시 보여줍니다.
+                this.Show();
+                // 화면 상태를 Normal로 설정합니다.
+                this.WindowState = WindowState.Normal;
+            };
         }
 
         private async void timer_Tick(object sender, EventArgs e)
