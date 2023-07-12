@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -25,6 +27,7 @@ namespace window_disaster_noti
     public partial class Info : Window
     {
         Winforms.NotifyIcon noti; //notifyicon을 위한 선언
+        Winforms.ContextMenuStrip menu;
 
         DispatcherTimer timer = new DispatcherTimer();
         private List<noti> list; //이전 메시지들 모음을 위한 리스트 
@@ -48,6 +51,8 @@ namespace window_disaster_noti
         public Info()
         {
             InitializeComponent();
+
+
             setNotiTray(); //노티실행
 
             Console.WriteLine("info창 시작");
@@ -77,11 +82,36 @@ namespace window_disaster_noti
         {
             Console.WriteLine("노티 실행");
             this.Hide();
+            menu = new Winforms.ContextMenuStrip();
             noti = new Winforms.NotifyIcon();
+
+            ToolStripMenuItem set = new ToolStripMenuItem();
+            ToolStripMenuItem exit = new ToolStripMenuItem();
+
+            set.Name = "set";
+            set.Text = "세팅";
+
+            set.Click += delegate (object click, EventArgs eClick) //세팅버튼
+            {
+                Console.WriteLine("세팅 클릭");
+            };
+
+            exit.Name = "eixt";
+            exit.Text = "종료";
+
+            exit.Click += delegate (object click, EventArgs eClick) //종료버튼
+            {
+                Console.WriteLine("종료 클릭");
+                this.Close();
+            };
+
+            menu.Items.Add(set);
+            menu.Items.Add(exit);
+
             noti.Icon = new System.Drawing.Icon("testIC.ico");
             noti.Visible = true;
-            noti.Text = "NotiTest";
-
+            noti.Text = "재난 알리미";
+            noti.ContextMenuStrip = menu;
             
 
             noti.DoubleClick += delegate (object sender, EventArgs eventArgs) //아이콘 더블클릭시 실행
@@ -89,9 +119,14 @@ namespace window_disaster_noti
                 this.Activate(); //창이 활성화된상태로 만들기
                 // 화면을 최소화 상태에서 다시 보여줍니다.
                 this.Show();
+
+                this.Left = SystemParameters.WorkArea.Width - this.Width - 100;
+                this.Top = SystemParameters.WorkArea.Height - this.Height - 100;
                 // 화면 상태를 Normal로 설정합니다.
                 this.WindowState = WindowState.Normal;
                 this.Topmost = true; //가장 위에 화면이 뜨게
+
+
             };
         }
 
@@ -110,8 +145,14 @@ namespace window_disaster_noti
 
             if("" + jobject["disasterSmsList"][0]["MD101_SN"] != lastnum) //가장 최근의 재난문자 id 와 다르면 새로운 메시지를 추가
             {
+                Console.WriteLine("새로운 알림 수신");
                 lastnum = "" + jobject["disasterSmsList"][0]["MD101_SN"];
                 lstbox.Items.Add(newitem);
+
+                new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림
+
+                
+                //new ToastContentBuilder().AddText("dfd").
             }
             
 
@@ -119,6 +160,8 @@ namespace window_disaster_noti
 
 
         }
+
+       
 
         async Task<string> GetBoardContent(string requestUrl, string payloadData)  //url로부터 json데이터 가져오는 코드
         {
