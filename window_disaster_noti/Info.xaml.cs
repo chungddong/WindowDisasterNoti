@@ -24,7 +24,7 @@ namespace window_disaster_noti
     /// </summary>
     public partial class Info : Window
     {
-        Winforms.NotifyIcon noti;
+        Winforms.NotifyIcon noti; //notifyicon을 위한 선언
 
         DispatcherTimer timer = new DispatcherTimer();
         private List<noti> list; //이전 메시지들 모음을 위한 리스트 
@@ -46,8 +46,9 @@ namespace window_disaster_noti
         public Info()
         {
             InitializeComponent();
+            setNotiTray(); //노티실행
 
-            setNotiTray();
+            Console.WriteLine("info창 시작");
 
             timer.Interval = TimeSpan.FromMilliseconds(3000);    //시간간격 설정
 
@@ -66,14 +67,20 @@ namespace window_disaster_noti
 
             //"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\" //날짜 payloaddata 형식
 
+            
+
         }
 
         private void setNotiTray()
         {
+            Console.WriteLine("노티 실행");
+            this.Hide();
             noti = new Winforms.NotifyIcon();
-            //noti.Icon = new System.Drawing.Icon("icon.png");
+            noti.Icon = new System.Drawing.Icon("testIC.ico");
             noti.Visible = true;
             noti.Text = "NotiTest";
+
+            
 
             noti.DoubleClick += delegate (object sender, EventArgs eventArgs)
             {
@@ -92,6 +99,8 @@ namespace window_disaster_noti
             JObject jobject = JObject.Parse(boardContent); //jobject 형태로 payloadData 가져오기(json데이터)
 
             //List<DisData> disData = JsonConvert.DeserializeObject<List<DisData>>(boardContent);
+
+            Console.WriteLine("n번째 실행중"); //콘솔창 테스트용(백그라운드 작동) - 나중에 삭제해도 됨
 
             var newitem = new noti { Title = "" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"] + " - " + jobject["disasterSmsList"][0]["RCV_AREA_NM"], maintext = "" + jobject["disasterSmsList"][0]["MSG_CN"], timeline = "" + jobject["disasterSmsList"][0]["REGIST_DT"]};
 
