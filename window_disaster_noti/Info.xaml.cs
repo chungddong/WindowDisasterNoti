@@ -33,6 +33,8 @@ namespace window_disaster_noti
 
         public string url = "https://www.safekorea.go.kr/idsiSFK/sfk/cs/sua/web/DisasterSmsList.do"; //재난문자 데이터 소스링크
 
+        public int refreshTime = 3000;
+
         DateTime today = DateTime.Today;
         DateTime startday; //시작 날짜
         public string date_start; //검색 시작 날짜 오늘 날짜의 이틀전
@@ -50,7 +52,7 @@ namespace window_disaster_noti
 
             Console.WriteLine("info창 시작");
 
-            timer.Interval = TimeSpan.FromMilliseconds(3000);    //시간간격 설정
+            timer.Interval = TimeSpan.FromMilliseconds(refreshTime);    //시간간격 설정
 
             timer.Tick += new EventHandler(timer_Tick);          //이벤트 추가
 

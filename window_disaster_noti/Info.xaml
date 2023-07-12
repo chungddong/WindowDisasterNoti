@@ -11,7 +11,7 @@
         ResizeMode="NoResize"
         WindowState="Normal"
         WindowStartupLocation="CenterScreen"
-        Title="main" Height="720" Width="480" Deactivated="Window_Deactivated" Closed="Window_Closed" Closing="Window_Closing">
+        Title="main" Height="720" Width="480" Deactivated="Window_Deactivated" Closed="Window_Closed" Closing="Window_Closing" Icon="/Icon.png">
     <Border CornerRadius="20" Background="#f2f2f2"  BorderThickness="2" BorderBrush="#464646" Cursor="Arrow">
 
         <Grid Margin="15"> 
@@ -47,7 +47,7 @@
                     <Label x:Name="label_title" Content="재난 문자 알림 서비스" FontSize="27" FontWeight="Bold"/>
                 </Grid>
 
-                <Grid Grid.Column="2">
+                <Grid Grid.Column="2" IsEnabled="False">
                     <Border x:Name="btn_set" Width="35" Height="35"
                                 HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="btn_set_clicked">
                         <Border.Background>
