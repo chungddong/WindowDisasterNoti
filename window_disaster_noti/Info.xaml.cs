@@ -61,7 +61,7 @@ namespace window_disaster_noti
 
             payloadData = "{\"searchInfo\":{\"pageIndex\":\"1\",\"pageUnit\":\"10\",\"pageSize\":\"10\",\"firstIndex\":\"1\",\"lastIndex\":\"1\",\"recordCountPerPage\":\"10\",\"searchBgnDe\":" + "\"" + date_start + "\"," + "\"searchEndDe\":" + "\"" + date_end + "\",\"searchGb\":\"1\",\"searchWrd\":\"\",\"rcv_Area_Id\":\"\",\"dstr_se_Id\":\"\",\"c_ocrc_type\":\"\",\"sbLawArea1\":\"\",\"sbLawArea2\":\"\",\"sbLawArea3\":\"\"}}";
 
-            MessageBox.Show("오늘 날짜 : " + date_end + ", " + "그저께 날짜 : " + date_start);
+            Console.WriteLine("오늘 날짜 : " + date_end + ", " + "그저께 날짜 : " + date_start);
 
             timer.Start(); //타이머 시작 - 메인 이벤트 막으려면 주석처리
 
@@ -82,12 +82,14 @@ namespace window_disaster_noti
 
             
 
-            noti.DoubleClick += delegate (object sender, EventArgs eventArgs)
+            noti.DoubleClick += delegate (object sender, EventArgs eventArgs) //아이콘 더블클릭시 실행
             {
+                this.Activate(); //창이 활성화된상태로 만들기
                 // 화면을 최소화 상태에서 다시 보여줍니다.
                 this.Show();
                 // 화면 상태를 Normal로 설정합니다.
                 this.WindowState = WindowState.Normal;
+                this.Topmost = true; //가장 위에 화면이 뜨게
             };
         }
 
@@ -145,6 +147,24 @@ namespace window_disaster_noti
             window_disaster_noti.dialog_set ds = new window_disaster_noti.dialog_set();
 
             ds.Show();
+        }
+
+        private void Window_Deactivated(object sender, EventArgs e) // 창 이외의 공간 클릭시
+        {
+            Console.WriteLine("창이 비활성화됨");
+
+            this.Hide();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            noti.Visible = false; //종료후에도 남아있는 트레이 아이콘 지우는 거 - 나중에 다시 확인 
+            noti.Icon = null;
         }
     }
 
