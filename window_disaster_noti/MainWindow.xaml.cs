@@ -65,8 +65,10 @@ namespace window_disaster_noti
 
             //List<DisData> disData = JsonConvert.DeserializeObject<List<DisData>>(boardContent);
 
-            text_newest.Content = "게시물 번호 : " + jobject["disasterSmsList"][0]["MD101_SN"];
-            textBox_content.Text = "게시물 내용 : " +jobject["disasterSmsList"][0]["MSG_CN"];
+            Console.WriteLine("" + jobject.ToString());
+
+            //text_newest.Content = "게시물 번호 : " + jobject["disasterSmsList"][0]["MD101_SN"];
+            //textBox_content.Text = "게시물 내용 : " +jobject["disasterSmsList"][0]["MSG_CN"];
 
             text_update_num.Content = num + "번째 업데이트";
             num++;

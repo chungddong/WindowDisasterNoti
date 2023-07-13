@@ -87,7 +87,7 @@
                                 HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Border.Background>
 
-                            <ImageBrush ImageSource="ic_back.png" />
+                            <ImageBrush ImageSource="Resources/ic_back.png" />
 
                         </Border.Background>
 

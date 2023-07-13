@@ -15,12 +15,13 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <Title></Title>
-    <PackageIcon>icon.png</PackageIcon>
+    <PackageIcon>Resources/icon.png</PackageIcon>
     <AssemblyName>재난 알리미</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="icon.png" />
+    <None Remove="ic_back.png" />
     <None Remove="setting.png" />
   </ItemGroup>
 
@@ -38,21 +39,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="icon.png">
+    <Resource Include="Resources\ic_back.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </Resource>
-    <Resource Include="setting.png">
+    <Resource Include="Resources\setting.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="ICON.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="testIC.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

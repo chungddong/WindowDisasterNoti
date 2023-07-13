@@ -22,6 +22,9 @@ namespace window_disaster_noti
         public setting()
         {
             InitializeComponent();
+
+            this.Left = SystemParameters.WorkArea.Width - this.Width - 100;
+            this.Top = SystemParameters.WorkArea.Height - this.Height - 100;
         }
     }
 }

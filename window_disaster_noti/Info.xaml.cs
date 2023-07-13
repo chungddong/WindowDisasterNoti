@@ -70,7 +70,7 @@ namespace window_disaster_noti
 
             Console.WriteLine("오늘 날짜 : " + date_end + ", " + "그저께 날짜 : " + date_start);
 
-            timer.Start(); //타이머 시작 - 메인 이벤트 막으려면 주석처리
+            //timer.Start(); //타이머 시작 - 메인 이벤트 막으려면 주석처리
 
             //"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\" //날짜 payloaddata 형식
 
@@ -94,6 +94,9 @@ namespace window_disaster_noti
             set.Click += delegate (object click, EventArgs eClick) //세팅버튼
             {
                 Console.WriteLine("세팅 클릭");
+                window_disaster_noti.setting window_set = new window_disaster_noti.setting();
+
+                window_set.Show();
             };
 
             exit.Name = "eixt";
@@ -141,6 +144,7 @@ namespace window_disaster_noti
 
             Console.WriteLine("n번째 실행중"); //콘솔창 테스트용(백그라운드 작동) - 나중에 삭제해도 됨
 
+            //아래 에외발생 주의 - try catch 달기
             var newitem = new noti { Title = "" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"] + " - " + jobject["disasterSmsList"][0]["RCV_AREA_NM"], maintext = "" + jobject["disasterSmsList"][0]["MSG_CN"], timeline = "" + jobject["disasterSmsList"][0]["REGIST_DT"]};
 
             if("" + jobject["disasterSmsList"][0]["MD101_SN"] != lastnum) //가장 최근의 재난문자 id 와 다르면 새로운 메시지를 추가
@@ -187,6 +191,7 @@ namespace window_disaster_noti
 
         private void btn_set_clicked(object sender, MouseButtonEventArgs e)
         {
+            Console.WriteLine("세팅버튼 눌림");
             window_disaster_noti.dialog_set ds = new window_disaster_noti.dialog_set();
 
             ds.Show();
