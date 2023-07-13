@@ -12,7 +12,10 @@
         WindowState="Normal"
         WindowStartupLocation="CenterScreen"
         Title="main" Height="720" Width="480" Deactivated="Window_Deactivated" Closed="Window_Closed" Closing="Window_Closing" Activated="Window_Activated">
-    <Border CornerRadius="20" Background="#f2f2f2"  BorderThickness="2" BorderBrush="#464646">
+
+    
+
+    <Border CornerRadius="20" Background="{DynamicResource m_background}"  BorderThickness="2" BorderBrush="#464646">
 
         <Grid Margin="15"> 
 
@@ -34,27 +37,21 @@
                 <Grid Grid.Column="0">
                     <Border Width="35" Height="35"
                                 HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Border.Background>
-
-                            <ImageBrush ImageSource="Resources/Icon.png"/>
-
-                        </Border.Background>
+                        
+                        <Rectangle Fill="{StaticResource btn_ic}" />
 
                     </Border>
                 </Grid>
 
                 <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label x:Name="label_title" Content="재난 문자 알림 서비스" FontSize="27" FontWeight="Bold"/>
+                    <Label x:Name="label_title" Content="재난 문자 알림 서비스" FontSize="27" FontWeight="Bold" Foreground="{DynamicResource TitleText}"/>
                 </Grid>
 
                 <Grid Grid.Column="2">
                     <Border x:Name="btn_set" Width="35" Height="35"
                                 HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="btn_set_clicked">
-                        <Border.Background>
-
-                            <ImageBrush ImageSource="Resources/Setting.png"/>
-
-                        </Border.Background>
+                        
+                        <Rectangle Fill="{StaticResource btn_set}" />
 
                     </Border>
                 </Grid>
@@ -62,12 +59,12 @@
             </Grid>
 
             <Grid Grid.Row="1" Cursor="Arrow">
-                <Label x:Name="label_recent_message" Content="최근 메시지" FontSize="19" FontWeight="Bold" Foreground="#6D6D6D"/>
+                <Label x:Name="label_recent_message" Content="최근 메시지" FontSize="19" FontWeight="Bold" Foreground="{DynamicResource ContentText}"/>
             </Grid>
 
             <Grid Grid.Row="2" Margin="0 5 0 0">
 
-                <Border Background="#D3D3D3" CornerRadius="18" Padding="5">
+                <Border Background="{DynamicResource info_box}" CornerRadius="18" Padding="5">
 
                     <ListBox x:Name="lstbox" Background="Transparent" BorderBrush="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                         <ListBox.Resources>
@@ -75,18 +72,18 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListBoxItem">
-                                            <Border Background="#f2f2f2" BorderBrush="Black" BorderThickness="1" CornerRadius="18 18 18 0" Margin="6">
+                                            <Border Background="{DynamicResource m_background}" BorderBrush="{DynamicResource TitleText}" BorderThickness="1" CornerRadius="18 18 18 0" Margin="6">
 
                                                 <StackPanel Margin="16">
                                                     <TextBlock Text="{Binding Title}" 
                                                HorizontalAlignment="left" Margin="0 0 0 0"
-                                               VerticalAlignment="Center" FontWeight="Bold" Foreground="#FFEF4534" FontSize="19" TextWrapping="Wrap" Width="380" />
+                                               VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource info_content_title}" FontSize="19" TextWrapping="Wrap" Width="380" />
                                                     <TextBlock Text="{Binding maintext}" 
                                                HorizontalAlignment="Left" Margin="0 3 0 3"
-                                               VerticalAlignment="Center" TextWrapping="Wrap" Width="380" FontSize="17"/>
+                                               VerticalAlignment="Center" TextWrapping="Wrap" Width="380" FontSize="17" Foreground="{DynamicResource TitleText}"/>
                                                     <TextBlock Text="{Binding timeline}"
                                                HorizontalAlignment="Left" Margin="0 0 0 0"
-                                               VerticalAlignment="Center" TextWrapping="Wrap" Width="240" Foreground="#FF797979" FontSize="15"/>
+                                               VerticalAlignment="Center" TextWrapping="Wrap" Width="240" Foreground="{DynamicResource info_content_timeline}" FontSize="15"/>
                                                 </StackPanel>
 
                                             </Border>
@@ -98,6 +95,8 @@
                         </ListBox.Resources>
 
                     </ListBox>
+
+                    
                     
                 </Border>
                 
@@ -106,9 +105,9 @@
             <Grid Grid.Row="3">
                 <WrapPanel Orientation="Vertical" Name="wraps" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                    <Label x:Name="label_bottom" Content="최근 48시간 이내메시지만 출력합니다" FontSize="17" FontWeight="Bold" Foreground="#6D6D6D"/>
+                    <Label x:Name="label_bottom" Content="최근 48시간 이내메시지만 출력합니다" FontSize="17" FontWeight="Bold" Foreground="{DynamicResource ContentText}"/>
 
-                    <Label x:Name="label_bottom_gps" Content="전국 전체" FontSize="15" FontWeight="Bold" Foreground="#6D6D6D" HorizontalAlignment="Center"/>
+                    <Label x:Name="label_bottom_gps" Content="전국 전체" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource ContentText}" HorizontalAlignment="Center"/>
                     
                 </WrapPanel>
                 

@@ -13,58 +13,8 @@
         WindowStartupLocation="CenterScreen"
         Title="main" Height="720" Width="480" Deactivated="Window_Deactivated" Activated="Window_Activated">
 
-    <Window.Resources>
 
-        <Style TargetType="CheckBox">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="CheckBox">
-                        <StackPanel Orientation="Horizontal">
-                            <Grid >
-                                <Border Width="45" Height="20" Background="LightGray" CornerRadius="10" Margin="5,0"></Border>
-                                <Border x:Name="button" Height="25" Width="25" CornerRadius="12.5" HorizontalAlignment="Left"  ></Border>
-                            </Grid>
-                            <ContentPresenter x:Name="content" Margin="10,0,0,0" Content="{TemplateBinding Content}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <ControlTemplate.Resources>
-                            <Storyboard x:Key="right">
-                                <ThicknessAnimation Storyboard.TargetProperty="Margin" Storyboard.TargetName="button" Duration="0:0:0.4" From="0,0,0,0" To="28,0,0,0" >
-                                    <ThicknessAnimation.EasingFunction>
-                                        <CircleEase EasingMode="EaseOut"/>
-                                    </ThicknessAnimation.EasingFunction>
-                                </ThicknessAnimation>
-                            </Storyboard>
-                            <Storyboard x:Key="left">
-                                <ThicknessAnimation Storyboard.TargetProperty="Margin" Storyboard.TargetName="button" Duration="0:0:0.4" From="28,0,0,0" To="0,0,0,0" >
-                                    <ThicknessAnimation.EasingFunction>
-                                        <CircleEase EasingMode="EaseOut"/>
-                                    </ThicknessAnimation.EasingFunction>
-                                </ThicknessAnimation>
-                            </Storyboard>
-                        </ControlTemplate.Resources>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="false">
-                                <Trigger.ExitActions>
-                                    <RemoveStoryboard BeginStoryboardName="leftt"></RemoveStoryboard>
-                                    <BeginStoryboard Storyboard="{StaticResource right}" x:Name="rightt" ></BeginStoryboard>
-                                </Trigger.ExitActions>
-                                <Setter TargetName="button" Property="Background" Value="#757575"></Setter>
-                            </Trigger>
-                            <Trigger Property="IsChecked" Value="true">
-                                <Trigger.ExitActions>
-                                    <RemoveStoryboard BeginStoryboardName="rightt"></RemoveStoryboard>
-                                    <BeginStoryboard Storyboard="{StaticResource left}" x:Name="leftt" ></BeginStoryboard>
-                                </Trigger.ExitActions>
-                                <Setter TargetName="button" Property="Background" Value="#EC4848"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-    
-    <Border CornerRadius="20" Background="#f2f2f2"  BorderThickness="2" BorderBrush="#464646" Cursor="Arrow">
+    <Border CornerRadius="20" Background="{DynamicResource m_background}"  BorderThickness="2" BorderBrush="#464646" Cursor="Arrow">
 
         <Grid Margin="15">
 
@@ -85,17 +35,14 @@
                 <Grid Grid.Column="0">
                     <Border x:Name="btn_back" Width="40" Height="40" Cursor="Hand"
                                 HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="btn_back_MouseDown">
-                        <Border.Background>
-
-                            <ImageBrush ImageSource="Resources/ic_back.png" />
-
-                        </Border.Background>
+                        
+                        <Rectangle Fill="{StaticResource btn_back}" />
 
                     </Border>
                 </Grid>
 
                 <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label x:Name="label_title" Content="프로그램 설정" FontSize="27" FontWeight="Bold"/>
+                    <Label x:Name="label_title" Content="프로그램 설정" FontSize="27" FontWeight="Bold" Foreground="{DynamicResource TitleText}"/>
                 </Grid>
 
                 <Grid Grid.Column="2">
@@ -110,22 +57,22 @@
 
             <Grid Grid.Row="1" Margin="0 5 0 0">
 
-                <Border Background="#f2f2f2" CornerRadius="18" Padding="10">
+                <Border Background="{DynamicResource m_background}" CornerRadius="18" Padding="10">
 
                     <StackPanel>
 
-                        <Label x:Name="test" Content="프로그램 설정" FontSize="17" FontWeight="Bold" />
+                        <Label x:Name="test" Content="프로그램 설정" FontSize="17" FontWeight="Bold" Foreground="{DynamicResource set_contentText}"/>
 
-                        <Border Width="auto" Height="auto" Background="#E3E3E3" BorderBrush="#BCBCBC" BorderThickness="2" CornerRadius="10">
+                        <Border Width="auto" Height="auto" Background="{DynamicResource set_box}" BorderBrush="{DynamicResource set_boxbrush}" BorderThickness="2" CornerRadius="10">
                             <StackPanel>
-                                <Label x:Name="everylocation" Content="전국 모든 지역" FontSize="17" FontWeight="Bold" Margin="10"/>
-                                <Label x:Name="userlocation" Content="사용자 지정위치" FontSize="17" FontWeight="Bold" Margin="10"/>
+                                <Label x:Name="everylocation" Content="전국 모든 지역" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_contentText}"/>
+                                <Label x:Name="userlocation" Content="사용자 지정위치" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_contentText}"/>
                             </StackPanel>
                         </Border>
 
-                        <Label Content="알림 설정" FontSize="17" FontWeight="Bold" Margin="0 10 0 0"/>
+                        <Label Content="알림 설정" FontSize="17" FontWeight="Bold" Margin="0 10 0 0" Foreground="{DynamicResource set_contentText}"/>
 
-                        <Border Width="auto" Height="auto" Background="#E3E3E3" BorderBrush="#BCBCBC" BorderThickness="2" CornerRadius="10">
+                        <Border Width="auto" Height="auto" Background="{DynamicResource set_box}" BorderBrush="{DynamicResource set_boxbrush}" BorderThickness="2" CornerRadius="10">
                             <StackPanel>
 
                                 <Grid>
@@ -134,8 +81,8 @@
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Label Grid.Column="0" x:Name="sfsf" Content="알림 허용" FontSize="17" FontWeight="Bold" Margin="10"/>
-                                    <CheckBox x:Name="cb_allowNoti" Grid.Column="1" HorizontalAlignment="Center" Click="cb_allowNoti_Click"/>
+                                    <Label Grid.Column="0" x:Name="sfsf" Content="알림 허용" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_contentText}"/>
+                                    <CheckBox x:Name="cb_allowNoti" Grid.Column="1" HorizontalAlignment="Center" Click="cb_allowNoti_Click" IsChecked="False" />
                                 </Grid>
 
                                 <Grid>
@@ -144,15 +91,15 @@
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Label Grid.Column="0" x:Name="syufsttf" Content="다시 알림 주기" FontSize="17" FontWeight="Bold" Margin="10" Foreground="#BCBCBC"/>
+                                    <Label Grid.Column="0" x:Name="syufsttf" Content="다시 알림 주기" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_imsiText}"/>
                                     
                                 </Grid>
                             </StackPanel>
                         </Border>
 
-                        <Label x:Name="dFfsf" Content="기타 설정" FontSize="17" FontWeight="Bold" Margin="0 10 0 0"/>
+                        <Label x:Name="dFfsf" Content="기타 설정" FontSize="17" FontWeight="Bold" Margin="0 10 0 0" Foreground="{DynamicResource set_contentText}"/>
 
-                        <Border Width="auto" Height="auto" Background="#E3E3E3" BorderBrush="#BCBCBC" BorderThickness="2" CornerRadius="10">
+                        <Border Width="auto" Height="auto" Background="{DynamicResource set_box}" BorderBrush="{DynamicResource set_boxbrush}" BorderThickness="2" CornerRadius="10">
                             <StackPanel>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -160,7 +107,7 @@
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Label Grid.Column="0" x:Name="sfmmsttf" Content="윈도우 시작 시 자동실행" FontSize="17" FontWeight="Bold" Margin="10"/>
+                                    <Label Grid.Column="0" x:Name="sfmmsttf" Content="윈도우 시작 시 자동실행" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_contentText}"/>
                                     <CheckBox x:Name="cb_runOnStartup" Grid.Column="1" HorizontalAlignment="Center" Click="cb_runOnStartup_Click"></CheckBox>
                                 </Grid>
 
@@ -170,11 +117,11 @@
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Label Grid.Column="0" x:Name="sfsttf" Content="팝업 알림 사용" FontSize="17" FontWeight="Bold" Margin="10"/>
+                                    <Label Grid.Column="0" Content="다크 모드 사용" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_contentText}"/>
                                     <CheckBox x:Name="cb_darkmode" Grid.Column="1" HorizontalAlignment="Center" Click="cb_darkmode_Click"/>
                                 </Grid>
 
-                                <Label x:Name="label_pinfo" Content="프로그램 정보" FontSize="17" FontWeight="Bold" Margin="10" Foreground="#FF287BEA" Cursor="Hand"/>
+                                <Label x:Name="label_pinfo" Content="프로그램 정보" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_imsiText}" Cursor="Hand"/>
                             </StackPanel>
                         </Border>
 
@@ -187,7 +134,7 @@
             <Grid Grid.Row="2">
                 <WrapPanel Orientation="Vertical" Name="wraps" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                    <Label x:Name="label_copyright" Content="2023. SOPHRA all right reserved" FontSize="15" FontWeight="Bold" Foreground="#6D6D6D" HorizontalAlignment="Center"/>
+                    <Label x:Name="label_copyright" Content="2023. SOPHRA all right reserved" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource ContentText}" HorizontalAlignment="Center"/>
 
                 </WrapPanel>
 

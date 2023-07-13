@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -59,10 +60,55 @@ namespace window_disaster_noti
 
         private void cb_darkmode_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("다크 모드");
-
             Properties.Settingdata.Default.cb_darkmode = cb_darkmode.IsChecked.Value;
             Properties.Settingdata.Default.Save();
+
+            if (Properties.Settingdata.Default.cb_darkmode == true) //다크모드 실행
+            {
+                Console.WriteLine("다크 모드 켬");
+                ChangeTheme(new Uri("Style/Darkmode.xaml", UriKind.Relative));
+            }
+            else
+            {
+                Console.WriteLine("다크 모드 끔");
+                ChangeTheme(new Uri("Style/Lightmode.xaml", UriKind.Relative));
+            }
+
+            
+
+            /*cb_allowNoti.IsChecked = Properties.Settingdata.Default.cb_allowNoti;
+            cb_darkmode.IsChecked = Properties.Settingdata.Default.cb_darkmode;
+            cb_runOnStartup.IsChecked = Properties.Settingdata.Default.cb_runOnStartup;
+
+            if (Properties.Settingdata.Default.cb_darkmode == true) //다크모드 실행
+            {
+                Console.WriteLine("다크 모드 켬");
+                ChangeTheme(new Uri("Style/Darkmode.xaml", UriKind.Relative));
+            }
+            else
+            {
+                Console.WriteLine("다크 모드 끔");
+                ChangeTheme(new Uri("Style/Lightmode.xaml", UriKind.Relative));
+
+            }*/
+
+        }
+
+        ResourceDictionary Theme;
+
+
+        private void ChangeTheme(Uri uri)
+        {
+            Theme = new ResourceDictionary() { Source = uri };
+
+            App.Current.Resources.Clear();
+            App.Current.Resources.MergedDictionaries.Add(Theme);
+        }
+
+
+        private void cb_darkmode_Unchecked(object sender, RoutedEventArgs e)
+        {
+
         }
 
 

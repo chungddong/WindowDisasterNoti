@@ -3,7 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:window_disaster_noti"
              StartupUri="info.xaml">
+    
+    
     <Application.Resources>
-         
+
+        <ResourceDictionary Source="Style/Darkmode.xaml"/>
+
     </Application.Resources>
 </Application>
