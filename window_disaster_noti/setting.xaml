@@ -83,8 +83,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <Border Width="40" Height="40" Cursor="Hand"
-                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border x:Name="btn_back" Width="40" Height="40" Cursor="Hand"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="btn_back_MouseDown">
                         <Border.Background>
 
                             <ImageBrush ImageSource="Resources/ic_back.png" />
@@ -135,7 +135,7 @@
                                     </Grid.ColumnDefinitions>
                                     
                                     <Label Grid.Column="0" x:Name="sfsf" Content="알림 허용" FontSize="17" FontWeight="Bold" Margin="10"/>
-                                    <CheckBox x:Name="cb_allowNoti" Grid.Column="1" HorizontalAlignment="Center"></CheckBox>
+                                    <CheckBox x:Name="cb_allowNoti" Grid.Column="1" HorizontalAlignment="Center" Click="cb_allowNoti_Click"/>
                                 </Grid>
 
                                 <Grid>
@@ -145,7 +145,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Grid.Column="0" x:Name="sfsttf" Content="팝업 알림 사용" FontSize="17" FontWeight="Bold" Margin="10"/>
-                                    <CheckBox x:Name="cb_usePopNoti" Grid.Column="1" HorizontalAlignment="Center"></CheckBox>
+                                    <CheckBox x:Name="cb_usePopNoti" Grid.Column="1" HorizontalAlignment="Center" Click="cb_usePopNoti_Click"></CheckBox>
                                 </Grid>
 
                                 <Grid>
@@ -171,9 +171,9 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Grid.Column="0" x:Name="sfmmsttf" Content="윈도우 시작 시 자동실행" FontSize="17" FontWeight="Bold" Margin="10"/>
-                                    <CheckBox x:Name="cb_runOnStartup" Grid.Column="1" HorizontalAlignment="Center"></CheckBox>
+                                    <CheckBox x:Name="cb_runOnStartup" Grid.Column="1" HorizontalAlignment="Center" Click="cb_runOnStartup_Click"></CheckBox>
                                 </Grid>
-                                <Label x:Name="label_pinfo" Content="프로그램 정보" FontSize="17" FontWeight="Bold" Margin="10" Foreground="#FF287BEA"/>
+                                <Label x:Name="label_pinfo" Content="프로그램 정보" FontSize="17" FontWeight="Bold" Margin="10" Foreground="#FF287BEA" Cursor="Hand"/>
                             </StackPanel>
                         </Border>
 

@@ -94,7 +94,7 @@ namespace window_disaster_noti
             set.Click += delegate (object click, EventArgs eClick) //세팅버튼
             {
                 Console.WriteLine("세팅 클릭");
-                window_disaster_noti.setting window_set = new window_disaster_noti.setting();
+                window_disaster_noti.setting window_set = new window_disaster_noti.setting(this);
 
                 window_set.Show();
             };
@@ -120,12 +120,14 @@ namespace window_disaster_noti
 
             noti.DoubleClick += delegate (object sender, EventArgs eventArgs) //아이콘 더블클릭시 실행
             {
+                
                 this.Activate(); //창이 활성화된상태로 만들기
                 // 화면을 최소화 상태에서 다시 보여줍니다.
                 this.Show();
 
                 this.Left = SystemParameters.WorkArea.Width - this.Width - 100;
                 this.Top = SystemParameters.WorkArea.Height - this.Height - 100;
+
                 // 화면 상태를 Normal로 설정합니다.
                 this.WindowState = WindowState.Normal;
                 this.Topmost = true; //가장 위에 화면이 뜨게
@@ -214,6 +216,13 @@ namespace window_disaster_noti
         {
             noti.Visible = false; //종료후에도 남아있는 트레이 아이콘 지우는 거 - 나중에 다시 확인 
             noti.Icon = null;
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            Console.WriteLine("info창 활성화");
+
+            
         }
     }
 

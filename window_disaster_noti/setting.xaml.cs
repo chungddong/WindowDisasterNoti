@@ -19,10 +19,12 @@ namespace window_disaster_noti
     /// </summary>
     public partial class setting : Window
     {
-        public setting()
+        Info window_info;
+        public setting(Info info)
         {
             InitializeComponent();
 
+            window_info = info;
 
             //설정데이터에서 저장된 데이터 불러오기
             cb_allowNoti.IsChecked = Properties.Settingdata.Default.cb_allowNoti;
@@ -44,6 +46,42 @@ namespace window_disaster_noti
             this.Top = SystemParameters.WorkArea.Height - this.Height - 100;
 
             
+        }
+
+
+        private void cb_allowNoti_Click(object sender, RoutedEventArgs e) //세팅 - 알림허용
+        {
+            Console.WriteLine("알림 설정");
+
+            Properties.Settingdata.Default.cb_allowNoti = cb_allowNoti.IsChecked.Value;
+        }
+
+        private void cb_usePopNoti_Click(object sender, RoutedEventArgs e) //세팅 - 팝업 알림
+        {
+            Console.WriteLine("팝업 알림");
+
+            Properties.Settingdata.Default.cb_usePopNoti = cb_usePopNoti.IsChecked.Value;
+        }
+
+        private void cb_runOnStartup_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("팝업 알림");
+
+            Properties.Settingdata.Default.cb_runOnStartup = cb_runOnStartup.IsChecked.Value;
+        }
+
+        private void btn_back_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine("뒤로가기 누름");
+
+
+            window_info.Show();
+            window_info.Left = SystemParameters.WorkArea.Width - this.Width - 100;
+            window_info.Top = SystemParameters.WorkArea.Height - this.Height - 100;
+
+            window_info.WindowState = WindowState.Normal;
+            window_info.Topmost = true;
+
         }
     }
 }

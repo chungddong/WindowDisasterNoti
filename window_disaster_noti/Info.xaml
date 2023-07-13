@@ -11,7 +11,7 @@
         ResizeMode="NoResize"
         WindowState="Normal"
         WindowStartupLocation="CenterScreen"
-        Title="main" Height="720" Width="480" Deactivated="Window_Deactivated" Closed="Window_Closed" Closing="Window_Closing">
+        Title="main" Height="720" Width="480" Deactivated="Window_Deactivated" Closed="Window_Closed" Closing="Window_Closing" Activated="Window_Activated">
     <Border CornerRadius="20" Background="#f2f2f2"  BorderThickness="2" BorderBrush="#464646">
 
         <Grid Margin="15"> 
