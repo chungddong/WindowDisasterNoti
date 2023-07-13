@@ -53,8 +53,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Properties\Settingdata.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settingdata.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="ICON.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settingdata.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settingdata.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 

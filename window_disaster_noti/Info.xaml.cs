@@ -106,6 +106,7 @@ namespace window_disaster_noti
             {
                 Console.WriteLine("종료 클릭");
                 this.Close();
+                Environment.Exit(0); //위 아래 둘중 하나만
             };
 
             menu.Items.Add(set);
