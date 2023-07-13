@@ -28,7 +28,7 @@ namespace window_disaster_noti
 
             //설정데이터에서 저장된 데이터 불러오기
             cb_allowNoti.IsChecked = Properties.Settingdata.Default.cb_allowNoti;
-            cb_usePopNoti.IsChecked = Properties.Settingdata.Default.cb_usePopNoti;
+            cb_darkmode.IsChecked = Properties.Settingdata.Default.cb_darkmode;
             cb_runOnStartup.IsChecked = Properties.Settingdata.Default.cb_runOnStartup;
 
         }
@@ -54,23 +54,27 @@ namespace window_disaster_noti
             Console.WriteLine("알림 설정");
 
             Properties.Settingdata.Default.cb_allowNoti = cb_allowNoti.IsChecked.Value;
+            Properties.Settingdata.Default.Save();
         }
 
-        private void cb_usePopNoti_Click(object sender, RoutedEventArgs e) //세팅 - 팝업 알림
+        private void cb_darkmode_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("팝업 알림");
+            Console.WriteLine("다크 모드");
 
-            Properties.Settingdata.Default.cb_usePopNoti = cb_usePopNoti.IsChecked.Value;
+            Properties.Settingdata.Default.cb_darkmode = cb_darkmode.IsChecked.Value;
+            Properties.Settingdata.Default.Save();
         }
+
 
         private void cb_runOnStartup_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("팝업 알림");
+            Console.WriteLine("자동 실행");
 
             Properties.Settingdata.Default.cb_runOnStartup = cb_runOnStartup.IsChecked.Value;
+            Properties.Settingdata.Default.Save();
         }
 
-        private void btn_back_MouseDown(object sender, MouseButtonEventArgs e)
+        private void btn_back_MouseDown(object sender, MouseButtonEventArgs e) //뒤로가기 버튼 클릭 시
         {
             Console.WriteLine("뒤로가기 누름");
 
@@ -81,7 +85,10 @@ namespace window_disaster_noti
 
             window_info.WindowState = WindowState.Normal;
             window_info.Topmost = true;
+            window_info.Activate();
 
         }
+
+        
     }
 }

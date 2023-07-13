@@ -133,19 +133,9 @@
                                         <ColumnDefinition Width="8*"/>
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
-                                    
+
                                     <Label Grid.Column="0" x:Name="sfsf" Content="알림 허용" FontSize="17" FontWeight="Bold" Margin="10"/>
                                     <CheckBox x:Name="cb_allowNoti" Grid.Column="1" HorizontalAlignment="Center" Click="cb_allowNoti_Click"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="8*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Label Grid.Column="0" x:Name="sfsttf" Content="팝업 알림 사용" FontSize="17" FontWeight="Bold" Margin="10"/>
-                                    <CheckBox x:Name="cb_usePopNoti" Grid.Column="1" HorizontalAlignment="Center" Click="cb_usePopNoti_Click"></CheckBox>
                                 </Grid>
 
                                 <Grid>
@@ -173,6 +163,17 @@
                                     <Label Grid.Column="0" x:Name="sfmmsttf" Content="윈도우 시작 시 자동실행" FontSize="17" FontWeight="Bold" Margin="10"/>
                                     <CheckBox x:Name="cb_runOnStartup" Grid.Column="1" HorizontalAlignment="Center" Click="cb_runOnStartup_Click"></CheckBox>
                                 </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="8*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0" x:Name="sfsttf" Content="팝업 알림 사용" FontSize="17" FontWeight="Bold" Margin="10"/>
+                                    <CheckBox x:Name="cb_darkmode" Grid.Column="1" HorizontalAlignment="Center" Click="cb_darkmode_Click"/>
+                                </Grid>
+
                                 <Label x:Name="label_pinfo" Content="프로그램 정보" FontSize="17" FontWeight="Bold" Margin="10" Foreground="#FF287BEA" Cursor="Hand"/>
                             </StackPanel>
                         </Border>
@@ -186,7 +187,7 @@
             <Grid Grid.Row="2">
                 <WrapPanel Orientation="Vertical" Name="wraps" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                    <Label x:Name="label_bottom_gps" Content="2023. SOPHRA all right reserved" FontSize="15" FontWeight="Bold" Foreground="#6D6D6D" HorizontalAlignment="Center"/>
+                    <Label x:Name="label_copyright" Content="2023. SOPHRA all right reserved" FontSize="15" FontWeight="Bold" Foreground="#6D6D6D" HorizontalAlignment="Center"/>
 
                 </WrapPanel>
 

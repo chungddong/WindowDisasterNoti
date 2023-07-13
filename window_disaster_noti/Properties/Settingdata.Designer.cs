@@ -58,5 +58,17 @@ namespace window_disaster_noti.Properties {
                 this["cb_runOnStartup"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool cb_darkmode {
+            get {
+                return ((bool)(this["cb_darkmode"]));
+            }
+            set {
+                this["cb_darkmode"] = value;
+            }
+        }
     }
 }

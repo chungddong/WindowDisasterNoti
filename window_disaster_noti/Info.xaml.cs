@@ -36,7 +36,7 @@ namespace window_disaster_noti
 
         public string url = "https://www.safekorea.go.kr/idsiSFK/sfk/cs/sua/web/DisasterSmsList.do"; //재난문자 데이터 소스링크
 
-        public int refreshTime = 3000;
+        public int refreshTime = 5000;
 
         DateTime today = DateTime.Today;
         DateTime startday; //시작 날짜
@@ -78,7 +78,7 @@ namespace window_disaster_noti
 
         }
 
-        private void setNotiTray()
+        private void setNotiTray() //트레이 관련 코드
         {
             Console.WriteLine("노티 실행");
             this.Hide();
@@ -138,26 +138,37 @@ namespace window_disaster_noti
 
         private async void timer_Tick(object sender, EventArgs e)
         {
-            string boardContent = await GetBoardContent(url, payloadData);
-
-
-            JObject jobject = JObject.Parse(boardContent); //jobject 형태로 payloadData 가져오기(json데이터)
-
-            //List<DisData> disData = JsonConvert.DeserializeObject<List<DisData>>(boardContent);
-
-            Console.WriteLine("n번째 실행중"); //콘솔창 테스트용(백그라운드 작동) - 나중에 삭제해도 됨
-
-            //아래 에외발생 주의 - try catch 달기
-            var newitem = new noti { Title = "" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"] + " - " + jobject["disasterSmsList"][0]["RCV_AREA_NM"], maintext = "" + jobject["disasterSmsList"][0]["MSG_CN"], timeline = "" + jobject["disasterSmsList"][0]["REGIST_DT"]};
-
-            if("" + jobject["disasterSmsList"][0]["MD101_SN"] != lastnum) //가장 최근의 재난문자 id 와 다르면 새로운 메시지를 추가
+            try
             {
-                Console.WriteLine("새로운 알림 수신");
-                lastnum = "" + jobject["disasterSmsList"][0]["MD101_SN"];
-                lstbox.Items.Add(newitem);
+                string boardContent = await GetBoardContent(url, payloadData);
 
-                new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림
 
+                JObject jobject = JObject.Parse(boardContent); //jobject 형태로 payloadData 가져오기(json데이터)
+
+                //List<DisData> disData = JsonConvert.DeserializeObject<List<DisData>>(boardContent);
+
+                Console.WriteLine("n번째 실행중"); //콘솔창 테스트용(백그라운드 작동) - 나중에 삭제해도 됨
+
+                //아래 에외발생 주의 - try catch 달기
+                var newitem = new noti { Title = "" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"] + " - " + jobject["disasterSmsList"][0]["RCV_AREA_NM"], maintext = "" + jobject["disasterSmsList"][0]["MSG_CN"], timeline = "" + jobject["disasterSmsList"][0]["REGIST_DT"] };
+
+                if ("" + jobject["disasterSmsList"][0]["MD101_SN"] != lastnum) //가장 최근의 재난문자 id 와 다르면 새로운 메시지를 추가
+                {
+                    Console.WriteLine("새로운 알림 수신");
+
+                    lastnum = "" + jobject["disasterSmsList"][0]["MD101_SN"];
+                    lstbox.Items.Add(newitem);
+
+                    if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만
+                    {
+                        new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림
+                    }
+
+                }
+            }
+            catch(Exception err)
+            {
+                Console.WriteLine("에러(timer_tick) : " + err);
             }
             
 
@@ -172,13 +183,24 @@ namespace window_disaster_noti
         {
             using (HttpClient client = new HttpClient())
             {
-                StringContent content = new StringContent(payloadData, System.Text.Encoding.UTF8, "application/json");
+                string result = "";
+                try
+                {
+                    StringContent content = new StringContent(payloadData, System.Text.Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync(requestUrl, content);
-                response.EnsureSuccessStatusCode(); // 요청이 성공적으로 완료되었는지 확인
+                    HttpResponseMessage response = await client.PostAsync(requestUrl, content);
+                    response.EnsureSuccessStatusCode(); // 요청이 성공적으로 완료되었는지 확인
 
-                string result = await response.Content.ReadAsStringAsync();
+                    result = await response.Content.ReadAsStringAsync();
+                    
+                }
+                catch(Exception err)
+                {
+                    Console.WriteLine("에러(getboard) : " + err);
+                }
+
                 return result;
+
             }
         }
 
@@ -192,12 +214,11 @@ namespace window_disaster_noti
 
         }
 
-        private void btn_set_clicked(object sender, MouseButtonEventArgs e)
+        private void btn_set_clicked(object sender, MouseButtonEventArgs e) //info 창 내의 세팅버튼 클릭시
         {
-            Console.WriteLine("세팅버튼 눌림");
-            window_disaster_noti.dialog_set ds = new window_disaster_noti.dialog_set();
+            window_disaster_noti.setting window_set = new window_disaster_noti.setting(this);
 
-            ds.Show();
+            window_set.Show();
         }
 
         private void Window_Deactivated(object sender, EventArgs e) // 창 이외의 공간 클릭시
