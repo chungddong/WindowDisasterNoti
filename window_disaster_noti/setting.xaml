@@ -173,7 +173,7 @@
                                     <Label Grid.Column="0" x:Name="sfmmsttf" Content="윈도우 시작 시 자동실행" FontSize="17" FontWeight="Bold" Margin="10"/>
                                     <CheckBox Grid.Column="1" HorizontalAlignment="Center"></CheckBox>
                                 </Grid>
-                                <Label x:Name="sfFsfeb" Content="프로그램 정보" FontSize="17" FontWeight="Bold" Margin="10" Foreground="#28A8EA"/>
+                                <Label x:Name="sfFsfeb" Content="프로그램 정보" FontSize="17" FontWeight="Bold" Margin="10" Foreground="#FF287BEA"/>
                             </StackPanel>
                         </Border>
 

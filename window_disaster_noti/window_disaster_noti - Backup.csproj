@@ -14,13 +14,10 @@
     <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <Title></Title>
-    <PackageIcon>icon.png</PackageIcon>
-    <AssemblyName>재난 알리미</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="icon.png" />
+    <None Remove="Icon.png" />
     <None Remove="setting.png" />
   </ItemGroup>
 
@@ -38,10 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="icon.png">
+    <Resource Include="Icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
     </Resource>
     <Resource Include="setting.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

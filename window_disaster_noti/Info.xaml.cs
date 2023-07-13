@@ -108,7 +108,7 @@ namespace window_disaster_noti
             menu.Items.Add(set);
             menu.Items.Add(exit);
 
-            noti.Icon = new System.Drawing.Icon("testIC.ico");
+            noti.Icon = new System.Drawing.Icon("ICON.ico");
             noti.Visible = true;
             noti.Text = "재난 알리미";
             noti.ContextMenuStrip = menu;
@@ -151,8 +151,6 @@ namespace window_disaster_noti
 
                 new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림
 
-                
-                //new ToastContentBuilder().AddText("dfd").
             }
             
 
