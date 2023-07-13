@@ -70,7 +70,7 @@ namespace window_disaster_noti
 
             Console.WriteLine("오늘 날짜 : " + date_end + ", " + "그저께 날짜 : " + date_start);
 
-            //timer.Start(); //타이머 시작 - 메인 이벤트 막으려면 주석처리
+            timer.Start(); //타이머 시작 - 메인 이벤트 막으려면 주석처리
 
             //"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\" //날짜 payloaddata 형식
 
