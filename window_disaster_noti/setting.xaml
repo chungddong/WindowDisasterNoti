@@ -122,21 +122,31 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Grid.Column="0" x:Name="sfxvxvsf" Content="전국 모든 지역" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_contentText}"/>
-                                    <RadioButton Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <RadioButton Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" GroupName="region" x:Name="radio_every_region" IsChecked="True">
                                         
                                     </RadioButton>
                                 </Grid>
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="8*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <Label Grid.Column="0" x:Name="syufsdfsttf" Content="사용자 지정 지역" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_contentText}"/>
-                                    <ComboBox Grid.Column="1">
+                                    <ComboBox Grid.Column="1" >
                                         
                                     </ComboBox>
+
+                                    <ComboBox Grid.Column="2" >
+
+                                    </ComboBox>
+
+                                    <RadioButton Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" GroupName="region">
+
+                                    </RadioButton>
 
                                 </Grid>
                             </StackPanel>

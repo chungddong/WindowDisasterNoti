@@ -70,5 +70,41 @@ namespace window_disaster_noti.Properties {
                 this["cb_darkmode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool every_region {
+            get {
+                return ((bool)(this["every_region"]));
+            }
+            set {
+                this["every_region"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("전라북도")]
+        public string province {
+            get {
+                return ((string)(this["province"]));
+            }
+            set {
+                this["province"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("전주시")]
+        public string city {
+            get {
+                return ((string)(this["city"]));
+            }
+            set {
+                this["city"] = value;
+            }
+        }
     }
 }

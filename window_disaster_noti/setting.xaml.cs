@@ -32,6 +32,8 @@ namespace window_disaster_noti
             cb_darkmode.IsChecked = Properties.Settingdata.Default.cb_darkmode;
             cb_runOnStartup.IsChecked = Properties.Settingdata.Default.cb_runOnStartup;
 
+            
+
         }
 
         private void Window_Deactivated(object sender, EventArgs e)

@@ -14,5 +14,14 @@
     <Setting Name="cb_darkmode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="every_region" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="province" Type="System.String" Scope="User">
+      <Value Profile="(Default)">전라북도</Value>
+    </Setting>
+    <Setting Name="city" Type="System.String" Scope="User">
+      <Value Profile="(Default)">전주시</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

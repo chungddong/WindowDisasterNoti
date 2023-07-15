@@ -36,7 +36,7 @@ namespace window_disaster_noti
 
         public string url = "https://www.safekorea.go.kr/idsiSFK/sfk/cs/sua/web/DisasterSmsList.do"; //재난문자 데이터 소스링크
 
-        public int refreshTime = 5000;
+        public int refreshTime = 10000;
 
         DateTime today = DateTime.Today;
         DateTime startday; //시작 날짜
