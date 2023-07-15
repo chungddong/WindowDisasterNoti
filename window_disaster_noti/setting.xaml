@@ -136,7 +136,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Grid.Column="0" x:Name="syufsdfsttf" Content="사용자 지정 지역" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_contentText}"/>
-                                    <ComboBox Grid.Column="1" >
+                                    <ComboBox Grid.Column="1"  >
                                         
                                     </ComboBox>
 
@@ -218,7 +218,7 @@
             <Grid Grid.Row="2">
                 <WrapPanel Orientation="Vertical" Name="wraps" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                    <Label x:Name="label_copyright" Content="2023. SOPHRA all right reserved" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource ContentText}" HorizontalAlignment="Center"/>
+                    <Label x:Name="label_copyright" Content="ⓒ 2023. SOPHRA all right reserved" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource ContentText}" HorizontalAlignment="Center"/>
 
                 </WrapPanel>
 
