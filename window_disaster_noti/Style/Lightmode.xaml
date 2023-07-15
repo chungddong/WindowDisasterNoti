@@ -50,25 +50,7 @@
         </Setter>
     </Style>
 
-    
-    
 
-    <Style TargetType="ComboBox">
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ComboBox">
-                    <Grid>
-                        <ToggleButton x:Name="ToggleButton" />
-                        <TextBox x:Name="TextBox" Text="dfdf" BorderBrush="Transparent" BorderThickness="0" Background="{DynamicResource set_box}" TextAlignment="Center" />
-                        <Popup x:Name="Popup">
-                            <!-- Popup의 내용 -->
-                        </Popup>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
 
 </ResourceDictionary>

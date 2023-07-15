@@ -52,6 +52,7 @@ namespace window_disaster_noti
         {
             InitializeComponent();
 
+            Console.WriteLine("설정확인 : " + Properties.Settingdata.Default.every_region);
 
             setNotiTray(); //노티실행
 

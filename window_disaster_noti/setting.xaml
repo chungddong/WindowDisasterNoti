@@ -122,29 +122,25 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Grid.Column="0" x:Name="sfxvxvsf" Content="전국 모든 지역" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_contentText}"/>
-                                    <RadioButton Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" GroupName="region" x:Name="radio_every_region" IsChecked="True">
+                                    <RadioButton x:Name="rb_every" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" GroupName="region" Checked="rb_every_Checked">
                                         
                                     </RadioButton>
                                 </Grid>
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="4*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="3*"/>
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <Label Grid.Column="0" x:Name="syufsdfsttf" Content="사용자 지정 지역" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_contentText}"/>
-                                    <ComboBox Grid.Column="1"  >
+                                    <TextBox Grid.Column="1" Height="23" BorderBrush="{DynamicResource set_boxbrush}" Background="{DynamicResource set_box}" BorderThickness="0 0 0 2" TextAlignment="Center" FontSize="14" Foreground="{DynamicResource ContentText}" FontWeight="Bold"
+                                             x:Name="tb_region_user" TextChanged="tb_region_user_TextChanged" >
                                         
-                                    </ComboBox>
+                                    </TextBox>
 
-                                    <ComboBox Grid.Column="2" >
-
-                                    </ComboBox>
-
-                                    <RadioButton Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" GroupName="region">
+                                    <RadioButton x:Name="rb_user" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" GroupName="region" Checked="rb_user_Checked">
 
                                     </RadioButton>
 

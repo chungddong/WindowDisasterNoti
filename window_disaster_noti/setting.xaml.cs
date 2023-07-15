@@ -32,8 +32,23 @@ namespace window_disaster_noti
             cb_darkmode.IsChecked = Properties.Settingdata.Default.cb_darkmode;
             cb_runOnStartup.IsChecked = Properties.Settingdata.Default.cb_runOnStartup;
 
-            
+            Console.WriteLine("" + Properties.Settingdata.Default.city.ToString());
+            tb_region_user.Text = Properties.Settingdata.Default.city.ToString();
 
+
+
+            //지역 설정 데이터 불러오기
+            if (Properties.Settingdata.Default.every_region == true) //모든 지역 설정이 켜져있을 경우
+            {
+                rb_every.IsChecked = true;
+                tb_region_user.IsEnabled = false;
+
+            }
+            else //꺼져있을 경우 - 사용자 지정위치로 저장된 경우
+            {
+                rb_user.IsChecked = true;
+                tb_region_user.IsEnabled = true;
+            }
         }
 
         private void Window_Deactivated(object sender, EventArgs e)
@@ -75,24 +90,6 @@ namespace window_disaster_noti
                 Console.WriteLine("다크 모드 끔");
                 ChangeTheme(new Uri("Style/Lightmode.xaml", UriKind.Relative));
             }
-
-            
-
-            /*cb_allowNoti.IsChecked = Properties.Settingdata.Default.cb_allowNoti;
-            cb_darkmode.IsChecked = Properties.Settingdata.Default.cb_darkmode;
-            cb_runOnStartup.IsChecked = Properties.Settingdata.Default.cb_runOnStartup;
-
-            if (Properties.Settingdata.Default.cb_darkmode == true) //다크모드 실행
-            {
-                Console.WriteLine("다크 모드 켬");
-                ChangeTheme(new Uri("Style/Darkmode.xaml", UriKind.Relative));
-            }
-            else
-            {
-                Console.WriteLine("다크 모드 끔");
-                ChangeTheme(new Uri("Style/Lightmode.xaml", UriKind.Relative));
-
-            }*/
 
         }
 
@@ -137,6 +134,29 @@ namespace window_disaster_noti
 
         }
 
-        
+        private void tb_region_user_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Console.WriteLine("글씨 바뀌고 저장함" + tb_region_user.Text.ToString() );
+            Properties.Settingdata.Default.city = tb_region_user.Text;
+            Properties.Settingdata.Default.Save();
+        }
+
+        private void rb_every_Checked(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("모든지역 체크됨");
+            Properties.Settingdata.Default.every_region = true;
+            Properties.Settingdata.Default.Save();
+            tb_region_user.IsEnabled = false;
+            Console.WriteLine("설정확인 : " + Properties.Settingdata.Default.every_region);
+        }
+
+        private void rb_user_Checked(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("사용자 지정지역 체크됨");
+            Properties.Settingdata.Default.every_region = false;
+            Properties.Settingdata.Default.Save();
+            tb_region_user.IsEnabled = true;
+            Console.WriteLine("설정확인 : " + Properties.Settingdata.Default.every_region);
+        }
     }
 }

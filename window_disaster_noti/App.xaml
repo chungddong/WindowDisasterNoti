@@ -7,7 +7,7 @@
     
     <Application.Resources>
 
-        <ResourceDictionary Source="Style/Lightmode.xaml"/>
+        <ResourceDictionary Source="Style/Darkmode.xaml"/>
 
     </Application.Resources>
 </Application>
