@@ -153,9 +153,27 @@ namespace window_disaster_noti
                 //아래 에외발생 주의 - try catch 달기
                 var newitem = new noti { Title = "" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"] + " - " + jobject["disasterSmsList"][0]["RCV_AREA_NM"], maintext = "" + jobject["disasterSmsList"][0]["MSG_CN"], timeline = "" + jobject["disasterSmsList"][0]["REGIST_DT"] };
 
+                
+
                 if ("" + jobject["disasterSmsList"][0]["MD101_SN"] != lastnum) //가장 최근의 재난문자 id 와 다르면 새로운 메시지를 추가
                 {
                     Console.WriteLine("새로운 알림 수신");
+
+                    string region = jobject["disasterSmsList"][0]["RCV_AREA_NM"].ToString();
+
+                    if (Properties.Settingdata.Default.every_region == true) //모든지역 알림 수신 상태
+                    {
+
+                    }
+                    else //사용자 지정지역 알림 수신 상태
+                    {
+                        Console.WriteLine("지역 목록" + region);
+                        //해당지역을 포함하고 있는지 확인한 다음 알림 진행
+                        if (region.Contains("전라남도 목포시"))
+                        {
+                            Console.WriteLine("특정 지역 알림 수신, ////// 지역 포함함!!");
+                        }
+                    }
 
                     lastnum = "" + jobject["disasterSmsList"][0]["MD101_SN"];
                     lstbox.Items.Add(newitem);
