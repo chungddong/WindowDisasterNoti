@@ -130,7 +130,7 @@ namespace window_disaster_noti
                     {
                         if(regKey.GetValue(programName) == null)
                         {
-                            regKey.SetValue(programName, AppDomain.CurrentDomain.BaseDirectory + "\\" + AppDomain.CurrentDomain.FriendlyName);
+                            regKey.SetValue(programName, System.Environment.CurrentDirectory.ToString() + @"\재난 알리미.exe");
                         }
                         else
                         {
