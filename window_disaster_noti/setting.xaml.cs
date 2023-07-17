@@ -21,6 +21,10 @@ namespace window_disaster_noti
     public partial class setting : Window
     {
         Info window_info;
+
+        string regPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+        string programName = "재난 알리미";
+
         public setting(Info info)
         {
             InitializeComponent();
@@ -117,6 +121,45 @@ namespace window_disaster_noti
 
             Properties.Settingdata.Default.cb_runOnStartup = cb_runOnStartup.IsChecked.Value;
             Properties.Settingdata.Default.Save();
+
+            if(Properties.Settingdata.Default.cb_runOnStartup == true)
+            {
+                try
+                {
+                    using (var regKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(regPath, true))
+                    {
+                        if(regKey.GetValue(programName) == null)
+                        {
+                            regKey.SetValue(programName, AppDomain.CurrentDomain.BaseDirectory + "\\" + AppDomain.CurrentDomain.FriendlyName);
+                        }
+                        else
+                        {
+                            if(regKey.GetValue(programName) != null)
+                            {
+                                regKey.DeleteValue(programName, false);
+                            }
+                        }
+
+                        regKey.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            else
+            {
+                using (var regKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(regPath, true))
+                {
+                    if (regKey.GetValue(programName) != null)
+                    {
+                        regKey.DeleteValue(programName, false);
+                    }
+
+                    regKey.Close();
+                }
+            }
         }
 
         private void btn_back_MouseDown(object sender, MouseButtonEventArgs e) //뒤로가기 버튼 클릭 시

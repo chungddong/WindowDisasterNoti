@@ -34,6 +34,8 @@ namespace window_disaster_noti
 
         private string lastnum; //가장 최근의 재난문자 ID
 
+        private string[] regionList;
+
         public string url = "https://www.safekorea.go.kr/idsiSFK/sfk/cs/sua/web/DisasterSmsList.do"; //재난문자 데이터 소스링크
 
         public int refreshTime = 10000;
@@ -52,11 +54,13 @@ namespace window_disaster_noti
         {
             InitializeComponent();
 
-            Console.WriteLine("설정확인 : " + Properties.Settingdata.Default.every_region);
+            Console.WriteLine("지역설정확인 : " + Properties.Settingdata.Default.every_region);
 
             setNotiTray(); //노티실행
 
             Console.WriteLine("info창 시작");
+
+            regionList = Properties.Settingdata.Default.city.Split(','); // 설정 지역 리스트 가져오기
 
             timer.Interval = TimeSpan.FromMilliseconds(refreshTime);    //시간간격 설정
 
@@ -163,24 +167,33 @@ namespace window_disaster_noti
 
                     if (Properties.Settingdata.Default.every_region == true) //모든지역 알림 수신 상태
                     {
+                        lastnum = "" + jobject["disasterSmsList"][0]["MD101_SN"];
+                        lstbox.Items.Add(newitem);
 
+                        if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만
+                        {
+                            new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림
+                        }
                     }
                     else //사용자 지정지역 알림 수신 상태
                     {
-                        Console.WriteLine("지역 목록" + region);
+                        Console.WriteLine("지역 목록 : " + region);
                         //해당지역을 포함하고 있는지 확인한 다음 알림 진행
-                        if (region.Contains("전라남도 목포시"))
+                        lastnum = "" + jobject["disasterSmsList"][0]["MD101_SN"];
+                        for (int i = 0; i < regionList.Length; i++)
                         {
-                            Console.WriteLine("특정 지역 알림 수신, ////// 지역 포함함!!");
+                            if (region.Contains(regionList[i])) //지역정보가 설정 지역 리스트 와 겹치는게 있다면
+                            {
+                                Console.WriteLine("겹치는 지역 발견!");
+                                lstbox.Items.Add(newitem);
+
+                                if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만
+                                {
+                                    new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림
+                                }
+                                break; //알림 두번 되면 안되니까 
+                            }
                         }
-                    }
-
-                    lastnum = "" + jobject["disasterSmsList"][0]["MD101_SN"];
-                    lstbox.Items.Add(newitem);
-
-                    if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만
-                    {
-                        new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림
                     }
 
                 }
@@ -262,7 +275,7 @@ namespace window_disaster_noti
         {
             Console.WriteLine("info창 활성화");
 
-            
+            regionList = Properties.Settingdata.Default.city.Split(',');
         }
     }
 
