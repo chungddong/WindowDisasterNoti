@@ -12,7 +12,7 @@ namespace window_disaster_noti.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
     internal sealed partial class Settingdata : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settingdata defaultInstance = ((Settingdata)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settingdata())));
