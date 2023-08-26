@@ -22,8 +22,6 @@
   <ItemGroup>
     <None Remove="icon.png" />
     <None Remove="ic_back.png" />
-    <None Remove="Style\Resources\ic_back%28d%29.png" />
-    <None Remove="Style\Resources\setting%28d%29.png" />
     <None Remove="setting.png" />
   </ItemGroup>
 
@@ -38,22 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Style\Resources\ic_back(d).png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Style\Resources\ic_back.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Style\Resources\icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
-    </Resource>
-    <Resource Include="Style\Resources\setting(d).png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Style\Resources\setting.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 
