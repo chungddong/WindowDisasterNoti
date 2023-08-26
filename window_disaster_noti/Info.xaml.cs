@@ -26,28 +26,39 @@ namespace window_disaster_noti
     /// </summary>
     public partial class Info : Window
     {
-        Winforms.NotifyIcon noti; //notifyicon을 위한 선언
-        Winforms.ContextMenuStrip menu;
+        //트레이 아이콘 관련 선언-------------------------------------------------
+        Winforms.NotifyIcon noti; //트레이 아이콘을 위한 선언
+        Winforms.ContextMenuStrip menu; //트레이 아이콘 메뉴
+        //------------------------------------------------------------------------
 
-        DispatcherTimer timer = new DispatcherTimer();
-        private List<noti> list; //이전 메시지들 모음을 위한 리스트 
 
+        //타이머 관련 선언---------------------------------------------------------------------------
+        DispatcherTimer timer = new DispatcherTimer(); //주기적 데이터 새로고침을 위한 타이머
+        public int refreshTime = 10000; //10초 - 데이터 새로고침 주기
+        //-------------------------------------------------------------------------------------------
+
+
+        
+        //데이터 분류 및 처리를 위한 선언------------------------------------------------------------
         private string lastnum; //가장 최근의 재난문자 ID
+        private List<noti> list; //이전 메시지들 모음을 위한 리스트 
+        private string[] regionList; //특정 지역 수신 설정 시 지역 목록 저장 배열
+        ResourceDictionary Theme; //앱 테마를 위한 선언
 
-        private string[] regionList;
-
+        //수신데이터 관련
         public string url = "https://www.safekorea.go.kr/idsiSFK/sfk/cs/sua/web/DisasterSmsList.do"; //재난문자 데이터 소스링크
+        string payloadData;
+        //-------------------------------------------------------------------------------------------
 
-        public int refreshTime = 10000; //10초
 
-        DateTime today = DateTime.Today;
+
+        //날짜와 관련된 선언-------------------------------------------------------------------------
+        DateTime today = DateTime.Today; //오늘 날짜 
         DateTime startday; //시작 날짜
         public string date_start; //검색 시작 날짜 오늘 날짜의 이틀전
         public string date_end;  //검색 끝 날짜 오늘 날짜
+        //-------------------------------------------------------------------------------------------
 
-        string payloadData; 
-
-        ResourceDictionary Theme;
 
 
 
@@ -57,79 +68,75 @@ namespace window_disaster_noti
 
             setNotiTray(); //노티실행
 
-            Console.WriteLine("info창 시작");
-
-            timer.Interval = TimeSpan.FromMilliseconds(refreshTime);    //시간간격 설정
-
-            timer.Tick += new EventHandler(timer_Tick);          //이벤트 추가
+            timer.Interval = TimeSpan.FromMilliseconds(refreshTime);  //타이머 간격 설정
+            timer.Tick += new EventHandler(timer_Tick);  //타이머에 이벤트(timer_tick) 추가
 
 
             startday = today.AddDays(-2); //이틀전으로 시작 날짜 설정
-            date_start = startday.ToString("yyyy-MM-dd");
+            date_start = startday.ToString("yyyy-MM-dd"); //날짜 형식설정 ex) 2023-07-12
             date_end = today.ToString("yyyy-MM-dd");
 
+            //특정기간의 데이터를 받아오긴 위해 보낼 payloadData 형식
             payloadData = "{\"searchInfo\":{\"pageIndex\":\"1\",\"pageUnit\":\"10\",\"pageSize\":\"10\",\"firstIndex\":\"1\",\"lastIndex\":\"1\",\"recordCountPerPage\":\"10\",\"searchBgnDe\":" + "\"" + date_start + "\"," + "\"searchEndDe\":" + "\"" + date_end + "\",\"searchGb\":\"1\",\"searchWrd\":\"\",\"rcv_Area_Id\":\"\",\"dstr_se_Id\":\"\",\"c_ocrc_type\":\"\",\"sbLawArea1\":\"\",\"sbLawArea2\":\"\",\"sbLawArea3\":\"\"}}";
-
-            Console.WriteLine("오늘 날짜 : " + date_end + ", " + "그저께 날짜 : " + date_start);
 
             timer.Start(); //타이머 시작 - 메인 이벤트 막으려면 주석처리
 
-            //"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\" //날짜 payloaddata 형식
 
-            
+
+
+            //Console.WriteLine("오늘 날짜 : " + date_end + ", " + "그저께 날짜 : " + date_start);
+            //"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\" //날짜 payloaddata 형식
 
         }
 
-        
+
+        #region 재난문자 데이터 수신 및 처리 관련 코드
 
         private async void timer_Tick(object sender, EventArgs e)
         {
-            try
+            try //예외처리
             {
-                string boardContent = await GetBoardContent(url, payloadData);
+                string boardContent = await GetBoardContent(url, payloadData); //url로 payloadData 보내 데이터 수신받기
+                JObject jobject = JObject.Parse(boardContent); //jobject 형태로 boardContent 변환하기(json데이터)
 
-
-                JObject jobject = JObject.Parse(boardContent); //jobject 형태로 payloadData 가져오기(json데이터)
-
-                //List<DisData> disData = JsonConvert.DeserializeObject<List<DisData>>(boardContent);
-
-                Console.WriteLine("n번째 실행중"); //콘솔창 테스트용(백그라운드 작동) - 나중에 삭제해도 됨
-
-                //아래 에외발생 주의 - try catch 달기
+                //수신받은 내역 class에 담기
                 var newitem = new noti { Title = "" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"] + " - " + jobject["disasterSmsList"][0]["RCV_AREA_NM"], maintext = "" + jobject["disasterSmsList"][0]["MSG_CN"], timeline = "" + jobject["disasterSmsList"][0]["REGIST_DT"] };
 
-                
 
-                if ("" + jobject["disasterSmsList"][0]["MD101_SN"] != lastnum) //가장 최근의 재난문자 id 와 다르면 새로운 메시지를 추가
+                //가장 최근에 수신한 재난문자 ID 와 다르면 새로운 메시지를 추가
+                if ("" + jobject["disasterSmsList"][0]["MD101_SN"] != lastnum) 
                 {
-                    Console.WriteLine("새로운 알림 수신");
+                    //Console.WriteLine("새로운 알림 수신");
 
-                    string region = jobject["disasterSmsList"][0]["RCV_AREA_NM"].ToString();
+                    string region = jobject["disasterSmsList"][0]["RCV_AREA_NM"].ToString(); //수신받은 재난문자의 대상지역 
+                    lastnum = "" + jobject["disasterSmsList"][0]["MD101_SN"]; //마지막으로 수신받은 문자 ID 갱신
 
+                    //지역 수신 설정에 따라 수신 결정
                     if (Properties.Settingdata.Default.every_region == true) //모든지역 알림 수신 상태
                     {
-                        lastnum = "" + jobject["disasterSmsList"][0]["MD101_SN"];
-                        lstbox.Items.Add(newitem);
+                        lstbox.Items.Add(newitem); //info 중앙 문자 수신 창에 메시지 추가
 
-                        if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만
+                        if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만 알림 수신
                         {
+                            //토스트메시지 생성
                             new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림
                         }
                     }
                     else //사용자 지정지역 알림 수신 상태
                     {
-                        Console.WriteLine("지역 목록 : " + region);
+                        //Console.WriteLine("지역 목록 : " + region);
+
                         //해당지역을 포함하고 있는지 확인한 다음 알림 진행
-                        lastnum = "" + jobject["disasterSmsList"][0]["MD101_SN"];
                         for (int i = 0; i < regionList.Length; i++)
                         {
                             if (region.Contains(regionList[i])) //지역정보가 설정 지역 리스트 와 겹치는게 있다면
                             {
-                                Console.WriteLine("겹치는 지역 발견!");
-                                lstbox.Items.Add(newitem);
+                                //Console.WriteLine("겹치는 지역 발견!");
+                                lstbox.Items.Add(newitem); //info 중앙 문자 수신 창에 메시지 추가
 
-                                if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만
+                                if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만 알림 수신
                                 {
+                                    //토스트메시지 생성
                                     new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림
                                 }
                                 break; //알림 두번 되면 안되니까 
@@ -141,7 +148,7 @@ namespace window_disaster_noti
             }
             catch(Exception err)
             {
-                Console.WriteLine("에러(timer_tick) : " + err);
+                Console.WriteLine("에러(timer_tick) : " + err.Message);
             }
             
 
@@ -169,7 +176,7 @@ namespace window_disaster_noti
                 }
                 catch(Exception err)
                 {
-                    Console.WriteLine("에러(getboard) : " + err);
+                    Console.WriteLine("에러(GetBoardContent) : " + err.Message);
                 }
 
                 return result;
@@ -177,49 +184,42 @@ namespace window_disaster_noti
             }
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        #endregion
 
-        }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void btn_set_clicked(object sender, MouseButtonEventArgs e) //info 창 내의 세팅버튼 클릭시
         {
-            window_disaster_noti.setting window_set = new window_disaster_noti.setting(this);
-
+            //세팅화면 이동
+            window_disaster_noti.setting window_set = new window_disaster_noti.setting(this); 
             window_set.Show();
-        }
-
-        private void Window_Deactivated(object sender, EventArgs e) // 창 이외의 공간 클릭시
-        {
-            Console.WriteLine("창이 비활성화됨");
-
-            this.Hide();
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            noti.Visible = false; //종료후에도 남아있는 트레이 아이콘 지우는 거 - 나중에 다시 확인 
+            noti.Visible = false; //종료후에도 남아있는 트레이 아이콘 지우기
             noti.Icon = null;
         }
+
+        private void ChangeTheme(Uri uri)
+        {
+            Theme = new ResourceDictionary() { Source = uri };
+
+            App.Current.Resources.Clear();
+            App.Current.Resources.MergedDictionaries.Add(Theme);
+        }
+
+        #region 창 활성화 및 비활성화 관련
 
         //창이 활성화된 경우 - 값이 새로고침되어야 하는 것들은 여기서 처리
         private void Window_Activated(object sender, EventArgs e)
         {
+
+
             Console.WriteLine("info창 활성화");
 
-            regionList = Properties.Settingdata.Default.city.Split(',');
-
-            if (Properties.Settingdata.Default.cb_darkmode == true) //다크모드 실행
+            //다크모드 설정되어 있을 경우
+            if (Properties.Settingdata.Default.cb_darkmode == true)
             {
                 Console.WriteLine("다크 모드 켬");
                 ChangeTheme(new Uri("Style/Darkmode.xaml", UriKind.Relative));
@@ -230,7 +230,7 @@ namespace window_disaster_noti
                 ChangeTheme(new Uri("Style/Lightmode.xaml", UriKind.Relative));
             }
 
-            //수신 지역 텍스트 변경
+            //info창 하단 수신 지역 텍스트 변경
             if (Properties.Settingdata.Default.every_region == true) //모든 지역 설정이 켜져 있을 경우
             {
                 label_bottom_gps.Content = "전국 전체";
@@ -244,16 +244,20 @@ namespace window_disaster_noti
                     label_bottom_gps.Content += regionList[i] + " |";
                 }
             }
+
+
         }
 
-
-        private void ChangeTheme(Uri uri)
+        //창이 비활성화된 경우
+        private void Window_Deactivated(object sender, EventArgs e) // 창 이외의 공간 클릭시
         {
-            Theme = new ResourceDictionary() { Source = uri };
+            Console.WriteLine("창이 비활성화됨");
 
-            App.Current.Resources.Clear();
-            App.Current.Resources.MergedDictionaries.Add(Theme);
+            this.Hide();
         }
+
+        #endregion
+        
 
         #region 트레이 아이콘 관련 코드
 
