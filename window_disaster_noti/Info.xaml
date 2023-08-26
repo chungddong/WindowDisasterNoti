@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:window_disaster_noti"
         mc:Ignorable="d"
         WindowStyle="None"
@@ -50,8 +51,8 @@
                 <Grid Grid.Column="2">
                     <Border x:Name="btn_set" Width="35" Height="35"
                                 HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="btn_set_clicked">
-                        
-                        <Rectangle Fill="{StaticResource btn_set}" />
+
+                        <iconPacks:PackIconMaterial Kind="CogOutline"  Width="35" Height="35" Foreground="{DynamicResource TitleText}"/>
 
                     </Border>
                 </Grid>

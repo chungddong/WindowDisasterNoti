@@ -62,12 +62,17 @@ namespace window_disaster_noti
             this.Close();
         }
 
+        //창이 활성화 됬을 경우
         private void Window_Activated(object sender, EventArgs e)
         {
             this.Left = SystemParameters.WorkArea.Width - this.Width - 100;
             this.Top = SystemParameters.WorkArea.Height - this.Height - 100;
 
-            
+            Console.WriteLine("setting창 활성화됨");
+
+            cb_allowNoti.IsChecked = Properties.Settingdata.Default.cb_allowNoti;
+            cb_darkmode.IsChecked = Properties.Settingdata.Default.cb_darkmode;
+            cb_runOnStartup.IsChecked = Properties.Settingdata.Default.cb_runOnStartup;
         }
 
 
