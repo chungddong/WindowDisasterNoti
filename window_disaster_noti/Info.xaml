@@ -106,7 +106,7 @@
             <Grid Grid.Row="3">
                 <WrapPanel Orientation="Vertical" Name="wraps" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                    <Label x:Name="label_bottom" Content="최근 48시간 이내메시지만 출력합니다" FontSize="17" FontWeight="Bold" Foreground="{DynamicResource ContentText}"/>
+                    <Label x:Name="label_bottom" Content="프로그램 시작 후 메시지만 출력합니다" FontSize="17" FontWeight="Bold" Foreground="{DynamicResource ContentText}"/>
 
                     <Label x:Name="label_bottom_gps" Content="전국 전체" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource ContentText}" HorizontalAlignment="Center"/>
                     

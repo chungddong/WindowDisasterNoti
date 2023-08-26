@@ -73,6 +73,17 @@ namespace window_disaster_noti
             cb_allowNoti.IsChecked = Properties.Settingdata.Default.cb_allowNoti;
             cb_darkmode.IsChecked = Properties.Settingdata.Default.cb_darkmode;
             cb_runOnStartup.IsChecked = Properties.Settingdata.Default.cb_runOnStartup;
+
+            if (Properties.Settingdata.Default.cb_darkmode == true) //다크모드 실행
+            {
+                Console.WriteLine("다크 모드 켬");
+                ChangeTheme(new Uri("Style/Darkmode.xaml", UriKind.Relative));
+            }
+            else
+            {
+                Console.WriteLine("다크 모드 끔");
+                ChangeTheme(new Uri("Style/Lightmode.xaml", UriKind.Relative));
+            }
         }
 
 

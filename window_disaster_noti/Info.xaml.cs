@@ -38,29 +38,26 @@ namespace window_disaster_noti
 
         public string url = "https://www.safekorea.go.kr/idsiSFK/sfk/cs/sua/web/DisasterSmsList.do"; //재난문자 데이터 소스링크
 
-        public int refreshTime = 10000;
+        public int refreshTime = 10000; //10초
 
         DateTime today = DateTime.Today;
         DateTime startday; //시작 날짜
         public string date_start; //검색 시작 날짜 오늘 날짜의 이틀전
         public string date_end;  //검색 끝 날짜 오늘 날짜
 
-        string payloadDataBakup = "{\"searchInfo\":{\"pageIndex\":\"1\",\"pageUnit\":\"10\",\"pageSize\":\"10\",\"firstIndex\":\"1\",\"lastIndex\":\"1\",\"recordCountPerPage\":\"10\",\"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\",\"searchGb\":\"1\",\"searchWrd\":\"\",\"rcv_Area_Id\":\"\",\"dstr_se_Id\":\"\",\"c_ocrc_type\":\"\",\"sbLawArea1\":\"\",\"sbLawArea2\":\"\",\"sbLawArea3\":\"\"}}";
-        string payloadData;
+        string payloadData; 
 
-        
+        ResourceDictionary Theme;
+
+
 
         public Info()
         {
             InitializeComponent();
 
-            Console.WriteLine("지역설정확인 : " + Properties.Settingdata.Default.every_region);
-
             setNotiTray(); //노티실행
 
             Console.WriteLine("info창 시작");
-
-            regionList = Properties.Settingdata.Default.city.Split(','); // 설정 지역 리스트 가져오기
 
             timer.Interval = TimeSpan.FromMilliseconds(refreshTime);    //시간간격 설정
 
@@ -83,63 +80,7 @@ namespace window_disaster_noti
 
         }
 
-        private void setNotiTray() //트레이 관련 코드
-        {
-            Console.WriteLine("노티 실행");
-            this.Hide();
-            menu = new Winforms.ContextMenuStrip();
-            noti = new Winforms.NotifyIcon();
-
-            ToolStripMenuItem set = new ToolStripMenuItem();
-            ToolStripMenuItem exit = new ToolStripMenuItem();
-
-            set.Name = "set";
-            set.Text = "세팅";
-
-            set.Click += delegate (object click, EventArgs eClick) //세팅버튼
-            {
-                Console.WriteLine("세팅 클릭");
-                window_disaster_noti.setting window_set = new window_disaster_noti.setting(this);
-
-                window_set.Show();
-            };
-
-            exit.Name = "eixt";
-            exit.Text = "종료";
-
-            exit.Click += delegate (object click, EventArgs eClick) //종료버튼
-            {
-                Console.WriteLine("종료 클릭");
-                this.Close();
-                Environment.Exit(0); //위 아래 둘중 하나만
-            };
-
-            menu.Items.Add(set);
-            menu.Items.Add(exit);
-
-            noti.Icon = new System.Drawing.Icon("ICON.ico");
-            noti.Visible = true;
-            noti.Text = "재난 알리미";
-            noti.ContextMenuStrip = menu;
-            
-
-            noti.DoubleClick += delegate (object sender, EventArgs eventArgs) //아이콘 더블클릭시 실행
-            {
-                
-                this.Activate(); //창이 활성화된상태로 만들기
-                // 화면을 최소화 상태에서 다시 보여줍니다.
-                this.Show();
-
-                this.Left = SystemParameters.WorkArea.Width - this.Width - 100;
-                this.Top = SystemParameters.WorkArea.Height - this.Height - 100;
-
-                // 화면 상태를 Normal로 설정합니다.
-                this.WindowState = WindowState.Normal;
-                this.Topmost = true; //가장 위에 화면이 뜨게
-
-
-            };
-        }
+        
 
         private async void timer_Tick(object sender, EventArgs e)
         {
@@ -271,20 +212,121 @@ namespace window_disaster_noti
             noti.Icon = null;
         }
 
+        //창이 활성화된 경우 - 값이 새로고침되어야 하는 것들은 여기서 처리
         private void Window_Activated(object sender, EventArgs e)
         {
             Console.WriteLine("info창 활성화");
 
             regionList = Properties.Settingdata.Default.city.Split(',');
+
+            if (Properties.Settingdata.Default.cb_darkmode == true) //다크모드 실행
+            {
+                Console.WriteLine("다크 모드 켬");
+                ChangeTheme(new Uri("Style/Darkmode.xaml", UriKind.Relative));
+            }
+            else
+            {
+                Console.WriteLine("다크 모드 끔");
+                ChangeTheme(new Uri("Style/Lightmode.xaml", UriKind.Relative));
+            }
+
+            //수신 지역 텍스트 변경
+            if (Properties.Settingdata.Default.every_region == true) //모든 지역 설정이 켜져 있을 경우
+            {
+                label_bottom_gps.Content = "전국 전체";
+            }
+            else //특정 지역 수신일 경우
+            {
+                label_bottom_gps.Content = "| ";
+                regionList = Properties.Settingdata.Default.city.Split(','); // 설정 지역 리스트 가져오기
+                for (int i = 0; i < regionList.Length; i++)
+                {
+                    label_bottom_gps.Content += regionList[i] + " |";
+                }
+            }
         }
+
+
+        private void ChangeTheme(Uri uri)
+        {
+            Theme = new ResourceDictionary() { Source = uri };
+
+            App.Current.Resources.Clear();
+            App.Current.Resources.MergedDictionaries.Add(Theme);
+        }
+
+        #region 트레이 아이콘 관련 코드
+
+        private void setNotiTray() //트레이 관련 코드
+        {
+            Console.WriteLine("노티 실행");
+            this.Hide();
+            menu = new Winforms.ContextMenuStrip();
+            noti = new Winforms.NotifyIcon();
+
+            ToolStripMenuItem set = new ToolStripMenuItem();
+            ToolStripMenuItem exit = new ToolStripMenuItem();
+
+            set.Name = "set";
+            set.Text = "세팅";
+
+            set.Click += delegate (object click, EventArgs eClick) //세팅버튼
+            {
+                Console.WriteLine("세팅 클릭");
+                window_disaster_noti.setting window_set = new window_disaster_noti.setting(this);
+
+                window_set.Show();
+            };
+
+            exit.Name = "eixt";
+            exit.Text = "종료";
+
+            exit.Click += delegate (object click, EventArgs eClick) //종료버튼
+            {
+                Console.WriteLine("종료 클릭");
+                this.Close();
+                Environment.Exit(0); //위 아래 둘중 하나만
+            };
+
+            menu.Items.Add(set);
+            menu.Items.Add(exit);
+
+            noti.Icon = new System.Drawing.Icon("ICON.ico");
+            noti.Visible = true;
+            noti.Text = "재난 알리미";
+            noti.ContextMenuStrip = menu;
+
+
+            noti.DoubleClick += delegate (object sender, EventArgs eventArgs) //아이콘 더블클릭시 실행
+            {
+
+                this.Activate(); //창이 활성화된상태로 만들기
+                // 화면을 최소화 상태에서 다시 보여줍니다.
+                this.Show();
+
+                this.Left = SystemParameters.WorkArea.Width - this.Width - 100;
+                this.Top = SystemParameters.WorkArea.Height - this.Height - 100;
+
+                // 화면 상태를 Normal로 설정합니다.
+                this.WindowState = WindowState.Normal;
+                this.Topmost = true; //가장 위에 화면이 뜨게
+
+
+            };
+        }
+
+        #endregion
     }
+
+
+
 
     public class noti  //메시지 출력용 구조 선언
     {
-        public string Title { get; set; } //제목
+        public string Title { get; set; } //메시지 제목
 
-        public string maintext { get; set; }
+        public string maintext { get; set; } //메시지 내용
 
-        public string timeline { get; set; }
+        public string timeline { get; set; } //메시지 수신 시간
     }
 }
