@@ -25,7 +25,8 @@
 
 백그라운드 상에서 주기적으로 국민재난안전포털(https://www.safekorea.go.kr/idsiSFK/neo/main/main.html) 로 요청을 보내 재난 알림 문자를 수신 받게 된다면 아래의 이미지처럼 윈도우 상에서의 토스트 메시지 형태로 알림을 받게 됩니다.
 
-![image](https://github.com/chungddong/WindowDisasterNoti/assets/48167704/3b44648a-103e-4500-8eeb-6dd0170dda4b) ![image](https://github.com/chungddong/WindowDisasterNoti/assets/48167704/de424096-09b5-4192-98f8-90802d9c3b28)
+![image](https://github.com/chungddong/WindowDisasterNoti/assets/48167704/3b44648a-103e-4500-8eeb-6dd0170dda4b) ![image](https://github.com/chungddong/WindowDisasterNoti/assets/48167704/ad47e2eb-a62f-4e05-be93-4a4881f936df)
+
 
 
 
