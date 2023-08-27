@@ -31,4 +31,4 @@
 
 # 라이센스(License)
 
-LICENSE
+[MIT LICENSE](https://github.com/chungddong/WindowDisasterNoti/blob/master/LICENSE)
