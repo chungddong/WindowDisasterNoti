@@ -295,7 +295,7 @@ namespace window_disaster_noti
             menu.Items.Add(set);
             menu.Items.Add(exit);
 
-            noti.Icon = new System.Drawing.Icon("ICON.ico");
+            noti.Icon = new System.Drawing.Icon(AppDomain.CurrentDomain.BaseDirectory + @"\ICON.ico");
             noti.Visible = true;
             noti.Text = "재난 알리미";
             noti.ContextMenuStrip = menu;

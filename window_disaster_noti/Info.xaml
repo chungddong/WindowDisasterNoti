@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:window_disaster_noti"
         mc:Ignorable="d"
         WindowStyle="None"
@@ -14,7 +15,6 @@
         WindowStartupLocation="CenterScreen"
         Title="main" Height="720" Width="480" Deactivated="Window_Deactivated" Closing="Window_Closing" Activated="Window_Activated">
 
-    
 
     <Border CornerRadius="20" Background="{DynamicResource m_background}"  BorderThickness="2" BorderBrush="#464646">
 
