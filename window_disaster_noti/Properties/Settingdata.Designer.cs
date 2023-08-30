@@ -49,7 +49,7 @@ namespace window_disaster_noti.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool cb_runOnStartup {
             get {
                 return ((bool)(this["cb_runOnStartup"]));

@@ -308,12 +308,15 @@ namespace window_disaster_noti
                 // 화면을 최소화 상태에서 다시 보여줍니다.
                 this.Show();
 
+                this.Focus();
+
                 this.Left = SystemParameters.WorkArea.Width - this.Width - 100;
                 this.Top = SystemParameters.WorkArea.Height - this.Height - 100;
 
                 // 화면 상태를 Normal로 설정합니다.
                 this.WindowState = WindowState.Normal;
                 this.Topmost = true; //가장 위에 화면이 뜨게
+
 
 
             };
