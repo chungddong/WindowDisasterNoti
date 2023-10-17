@@ -20,7 +20,6 @@ using System.Windows.Threading;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PuppeteerSharp;
 
 namespace window_disaster_noti
 {
