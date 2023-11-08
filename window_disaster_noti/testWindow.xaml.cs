@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Net.Http;
 using Microsoft.AspNetCore.SignalR.Client;
+using System.Windows.Forms;
 
 namespace window_disaster_noti
 {
@@ -35,17 +36,19 @@ namespace window_disaster_noti
         private async void InitializeSignalRConnection()
         {
             hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://localhost:7002/chathub")
+                .WithUrl("https://wdnserverservertestwithappsevice.azurewebsites.net/chathub")
                 .Build();
 
             hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
             {
                 Dispatcher.Invoke(() => //Console.WriteLine("Name : " + user + ", Message : " + message));
                 new ToastContentBuilder().AddText(user).AddText(message).Show());
+                Console.WriteLine(message);
             });
 
             try {
                 await hubConnection.StartAsync();
+                Console.WriteLine("연결완료");
             }
             catch (Exception ex)
             {
