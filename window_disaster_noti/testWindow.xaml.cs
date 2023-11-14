@@ -16,6 +16,7 @@ using System.Net;
 using System.Net.Http;
 using Microsoft.AspNetCore.SignalR.Client;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
 
 namespace window_disaster_noti
 {
@@ -36,14 +37,21 @@ namespace window_disaster_noti
         private async void InitializeSignalRConnection()
         {
             hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://wdnserverservertestwithappsevice.azurewebsites.net/chathub")
+                .WithUrl("https://localhost:7262/chathub")
                 .Build();
 
             hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
             {
-                Dispatcher.Invoke(() => //Console.WriteLine("Name : " + user + ", Message : " + message));
-                new ToastContentBuilder().AddText(user).AddText(message).Show());
+                /*Dispatcher.Invoke(() => //Console.WriteLine("Name : " + user + ", Message : " + message));
+                new ToastContentBuilder().AddText(user).AddText(message).Show());*/
                 Console.WriteLine(message);
+
+
+                
+
+                /*JObject jobject = JObject.Parse(message); //jobject 형태로 boardContent 변환하기(json데이터)
+
+                new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림*/
             });
 
             try {

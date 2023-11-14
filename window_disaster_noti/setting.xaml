@@ -168,11 +168,21 @@
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="8*"/>
-                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="5*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Label Grid.Column="0" x:Name="syufsttf" Content="다시 알림 주기" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_imsiText}"/>
+                                    <Label Grid.Column="0" x:Name="syufsttf" Content="알림 서버 설정" FontSize="17" FontWeight="Bold" Margin="10" Foreground="{DynamicResource set_contentText}"/>
+
+                                    <Grid Grid.Column="1">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">로컬</Label>
+                                            <RadioButton Content="로컬" HorizontalAlignment="Center" VerticalAlignment="Center"></RadioButton>
+                                            <Label Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">테스트 서버</Label>
+                                            <RadioButton Content="로컬" HorizontalAlignment="Center" VerticalAlignment="Center"></RadioButton>
+                                        </StackPanel>
+                                        
+                                    </Grid>
                                     
                                 </Grid>
                             </StackPanel>
