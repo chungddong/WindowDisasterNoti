@@ -1,7 +1,9 @@
-﻿using Microsoft.Toolkit.Uwp.Notifications;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Toolkit.Uwp.Notifications;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -41,7 +43,7 @@ namespace window_disaster_noti
         
         //데이터 분류 및 처리를 위한 선언------------------------------------------------------------
         private string lastnum; //가장 최근의 재난문자 ID
-        private List<noti> list; //이전 메시지들 모음을 위한 리스트 
+        private List<DisNoti> list; //이전 메시지들 모음을 위한 리스트 
         private string[] regionList; //특정 지역 수신 설정 시 지역 목록 저장 배열
         ResourceDictionary Theme; //앱 테마를 위한 선언
 
@@ -60,6 +62,10 @@ namespace window_disaster_noti
         //-------------------------------------------------------------------------------------------
 
 
+        //서버와 관련된 선언-------------------------------------------------------------------------
+        private HubConnection hubConnection;
+
+        //-------------------------------------------------------------------------------------------
 
 
         public Info()
@@ -68,6 +74,20 @@ namespace window_disaster_noti
 
             setNotiTray(); //노티실행
 
+
+            ServerConnect();
+
+
+
+            //Console.WriteLine("오늘 날짜 : " + date_end + ", " + "그저께 날짜 : " + date_start);
+            //"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\" //날짜 payloaddata 형식
+
+        }
+
+
+        public void LocalConnect() //서버 작동 안할시 로컬 클라이언트에서 직접 데이터 받아오기
+        {
+            Console.WriteLine("서버대신 로컬로 가져오기 시작");
             timer.Interval = TimeSpan.FromMilliseconds(refreshTime);  //타이머 간격 설정
             timer.Tick += new EventHandler(timer_Tick);  //타이머에 이벤트(timer_tick) 추가
 
@@ -80,17 +100,62 @@ namespace window_disaster_noti
             payloadData = "{\"searchInfo\":{\"pageIndex\":\"1\",\"pageUnit\":\"10\",\"pageSize\":\"10\",\"firstIndex\":\"1\",\"lastIndex\":\"1\",\"recordCountPerPage\":\"10\",\"searchBgnDe\":" + "\"" + date_start + "\"," + "\"searchEndDe\":" + "\"" + date_end + "\",\"searchGb\":\"1\",\"searchWrd\":\"\",\"rcv_Area_Id\":\"\",\"dstr_se_Id\":\"\",\"c_ocrc_type\":\"\",\"sbLawArea1\":\"\",\"sbLawArea2\":\"\",\"sbLawArea3\":\"\"}}";
 
             timer.Start(); //타이머 시작 - 메인 이벤트 막으려면 주석처리
+        }
 
+        public async void ServerConnect() //서버 작동 시 서버에서 데이터 수신
+        {
+            hubConnection = new HubConnectionBuilder()
+                .WithUrl("https://localhost:7262/chathub")
+                .Build();
 
+            hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+            {
+                //서버로부터 데이터 수신했을 때
+                //Console.WriteLine(message);
 
+                OnReceiveFromServer(message);
+            });
 
-            //Console.WriteLine("오늘 날짜 : " + date_end + ", " + "그저께 날짜 : " + date_start);
-            //"searchBgnDe\":\"2023-07-01\",\"searchEndDe\":\"2023-07-03\" //날짜 payloaddata 형식
-
+            try
+            {
+                await hubConnection.StartAsync();
+                Console.WriteLine("연결완료");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"연결 오류: {ex.Message}");
+                LocalConnect();
+            }
         }
 
 
+
+
         #region 재난문자 데이터 수신 및 처리 관련 코드
+
+        public void OnReceiveFromServer(string message)
+        {
+            try
+            {
+                JObject jobject = JObject.Parse(message);
+
+                //수신받은 내역 class에 담기
+                var newitem = new DisNoti
+                {
+                    Title = "" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"] + " - " + jobject["disasterSmsList"][0]["RCV_AREA_NM"],
+                    maintext = "" + jobject["disasterSmsList"][0]["MSG_CN"],
+                    timeline = "" + jobject["disasterSmsList"][0]["REGIST_DT"],
+                    MessageId = "" + jobject["disasterSmsList"][0]["MD101_SN"],
+                    region = "" + jobject["disasterSmsList"][0]["RCV_AREA_NM"]
+                };
+                NotiProcess(newitem);
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine("OnReceiveFromServer : " + err.Message);
+            }
+        }
+
 
         private async void timer_Tick(object sender, EventArgs e)
         {
@@ -100,51 +165,17 @@ namespace window_disaster_noti
                 JObject jobject = JObject.Parse(boardContent); //jobject 형태로 boardContent 변환하기(json데이터)
 
                 //수신받은 내역 class에 담기
-                var newitem = new noti { Title = "" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"] + " - " + jobject["disasterSmsList"][0]["RCV_AREA_NM"], maintext = "" + jobject["disasterSmsList"][0]["MSG_CN"], timeline = "" + jobject["disasterSmsList"][0]["REGIST_DT"] };
-
-
-                //가장 최근에 수신한 재난문자 ID 와 다르면 새로운 메시지를 추가
-                if ("" + jobject["disasterSmsList"][0]["MD101_SN"] != lastnum) 
+                var newitem = new DisNoti
                 {
-                    //Console.WriteLine("새로운 알림 수신");
+                    Title = "" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"] + " - " + jobject["disasterSmsList"][0]["RCV_AREA_NM"],
+                    maintext = "" + jobject["disasterSmsList"][0]["MSG_CN"],
+                    timeline = "" + jobject["disasterSmsList"][0]["REGIST_DT"],
+                    MessageId = "" + jobject["disasterSmsList"][0]["MD101_SN"],
+                    region = "" + jobject["disasterSmsList"][0]["RCV_AREA_NM"]
+                };
 
-                    string region = jobject["disasterSmsList"][0]["RCV_AREA_NM"].ToString(); //수신받은 재난문자의 대상지역 
-                    lastnum = "" + jobject["disasterSmsList"][0]["MD101_SN"]; //마지막으로 수신받은 문자 ID 갱신
 
-                    //지역 수신 설정에 따라 수신 결정
-                    if (Properties.Settingdata.Default.every_region == true) //모든지역 알림 수신 상태
-                    {
-                        lstbox.Items.Add(newitem); //info 중앙 문자 수신 창에 메시지 추가
-
-                        if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만 알림 수신
-                        {
-                            //토스트메시지 생성
-                            new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림
-                        }
-                    }
-                    else //사용자 지정지역 알림 수신 상태
-                    {
-                        //Console.WriteLine("지역 목록 : " + region);
-
-                        //해당지역을 포함하고 있는지 확인한 다음 알림 진행
-                        for (int i = 0; i < regionList.Length; i++)
-                        {
-                            if (region.Contains(regionList[i])) //지역정보가 설정 지역 리스트 와 겹치는게 있다면
-                            {
-                                //Console.WriteLine("겹치는 지역 발견!");
-                                lstbox.Items.Add(newitem); //info 중앙 문자 수신 창에 메시지 추가
-
-                                if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만 알림 수신
-                                {
-                                    //토스트메시지 생성
-                                    new ToastContentBuilder().AddText("" + jobject["disasterSmsList"][0]["DSSTR_SE_NM"]).AddText("" + jobject["disasterSmsList"][0]["MSG_CN"]).Show(); //토스트알림
-                                }
-                                break; //알림 두번 되면 안되니까 
-                            }
-                        }
-                    }
-
-                }
+                NotiProcess(newitem);
             }
             catch(Exception err)
             {
@@ -155,6 +186,61 @@ namespace window_disaster_noti
             timer.Start(); //재귀 실행
 
 
+        }
+
+
+        public void NotiProcess(DisNoti newitem)
+        {
+            //가장 최근에 수신한 재난문자 ID 와 다르면 새로운 메시지를 추가
+            if (newitem.MessageId != lastnum)
+            {
+                //Console.WriteLine("새로운 알림 수신");
+
+                string region = newitem.region; //수신받은 재난문자의 대상지역 
+                lastnum = newitem.MessageId; //마지막으로 수신받은 문자 ID 갱신
+
+                //지역 수신 설정에 따라 수신 결정
+                if (Properties.Settingdata.Default.every_region == true) //모든지역 알림 수신 상태
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        lstbox.Items.Add(newitem); //info 중앙 문자 수신 창에 메시지 추가
+                    }));
+
+
+                    if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만 알림 수신
+                    {
+                        //토스트메시지 생성
+                        new ToastContentBuilder().AddText(newitem.Title).AddText(newitem.maintext).Show(); //토스트알림
+                    }
+                }
+                else //사용자 지정지역 알림 수신 상태
+                {
+                    //Console.WriteLine("지역 목록 : " + region);
+
+                    //해당지역을 포함하고 있는지 확인한 다음 알림 진행
+                    for (int i = 0; i < regionList.Length; i++)
+                    {
+                        if (region.Contains(regionList[i])) //지역정보가 설정 지역 리스트 와 겹치는게 있다면
+                        {
+                            //Console.WriteLine("겹치는 지역 발견!");
+                            //UI 담당 스레드 아닐 경우 에러 방지 위해
+                            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                            {
+                                lstbox.Items.Add(newitem); //info 중앙 문자 수신 창에 메시지 추가
+                            }));
+
+                            if (Properties.Settingdata.Default.cb_allowNoti == true) //설정의 알림허용이 켜져있을 경우만 알림 수신
+                            {
+                                //토스트메시지 생성
+                                new ToastContentBuilder().AddText(newitem.Title).AddText(newitem.maintext).Show(); //토스트알림
+                            }
+                            break; //알림 두번 되면 안되니까 
+                        }
+                    }
+                }
+
+            }
         }
 
        
@@ -186,7 +272,7 @@ namespace window_disaster_noti
 
         #endregion
 
-
+        #region UI 이벤트 관련
 
         private void btn_set_clicked(object sender, MouseButtonEventArgs e) //info 창 내의 세팅버튼 클릭시
         {
@@ -208,6 +294,8 @@ namespace window_disaster_noti
             App.Current.Resources.Clear();
             App.Current.Resources.MergedDictionaries.Add(Theme);
         }
+
+        #endregion
 
         #region 창 활성화 및 비활성화 관련
 
@@ -328,12 +416,16 @@ namespace window_disaster_noti
 
 
 
-    public class noti  //메시지 출력용 구조 선언
+    public class DisNoti  //메시지 출력용 구조 선언
     {
         public string Title { get; set; } //메시지 제목
 
         public string maintext { get; set; } //메시지 내용
 
         public string timeline { get; set; } //메시지 수신 시간
+
+        public string MessageId { get; set; }  //메시지 아이디
+
+        public string region { get; set; } //지역
     }
 }
