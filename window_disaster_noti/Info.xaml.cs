@@ -91,14 +91,6 @@ namespace window_disaster_noti
             timer.Interval = TimeSpan.FromMilliseconds(refreshTime);  //타이머 간격 설정
             timer.Tick += new EventHandler(timer_Tick);  //타이머에 이벤트(timer_tick) 추가
 
-
-            startday = today.AddDays(-2); //이틀전으로 시작 날짜 설정
-            date_start = startday.ToString("yyyy-MM-dd"); //날짜 형식설정 ex) 2023-07-12
-            date_end = today.ToString("yyyy-MM-dd");
-
-            //특정기간의 데이터를 받아오긴 위해 보낼 payloadData 형식
-            payloadData = "{\"searchInfo\":{\"pageIndex\":\"1\",\"pageUnit\":\"10\",\"pageSize\":\"10\",\"firstIndex\":\"1\",\"lastIndex\":\"1\",\"recordCountPerPage\":\"10\",\"searchBgnDe\":" + "\"" + date_start + "\"," + "\"searchEndDe\":" + "\"" + date_end + "\",\"searchGb\":\"1\",\"searchWrd\":\"\",\"rcv_Area_Id\":\"\",\"dstr_se_Id\":\"\",\"c_ocrc_type\":\"\",\"sbLawArea1\":\"\",\"sbLawArea2\":\"\",\"sbLawArea3\":\"\"}}";
-
             timer.Start(); //타이머 시작 - 메인 이벤트 막으려면 주석처리
         }
 
@@ -111,8 +103,6 @@ namespace window_disaster_noti
             hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
             {
                 //서버로부터 데이터 수신했을 때
-                //Console.WriteLine(message);
-
                 OnReceiveFromServer(message);
             });
 
@@ -161,6 +151,14 @@ namespace window_disaster_noti
         {
             try //예외처리
             {
+                startday = today.AddDays(-2); //이틀전으로 시작 날짜 설정
+                date_start = startday.ToString("yyyy-MM-dd"); //날짜 형식설정 ex) 2023-07-12
+                date_end = today.ToString("yyyy-MM-dd");
+
+                //특정기간의 데이터를 받아오긴 위해 보낼 payloadData 형식
+                payloadData = "{\"searchInfo\":{\"pageIndex\":\"1\",\"pageUnit\":\"10\",\"pageSize\":\"10\",\"firstIndex\":\"1\",\"lastIndex\":\"1\",\"recordCountPerPage\":\"10\",\"searchBgnDe\":" + "\"" + date_start + "\"," + "\"searchEndDe\":" + "\"" + date_end + "\",\"searchGb\":\"1\",\"searchWrd\":\"\",\"rcv_Area_Id\":\"\",\"dstr_se_Id\":\"\",\"c_ocrc_type\":\"\",\"sbLawArea1\":\"\",\"sbLawArea2\":\"\",\"sbLawArea3\":\"\"}}";
+
+
                 string boardContent = await GetBoardContent(url, payloadData); //url로 payloadData 보내 데이터 수신받기
                 JObject jobject = JObject.Parse(boardContent); //jobject 형태로 boardContent 변환하기(json데이터)
 
